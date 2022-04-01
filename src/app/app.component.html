@@ -1,8 +1,13 @@
 <h1>Welcome to PayKids</h1>
 <nav>
   <a *ngIf="!loggedIn" routerLink="/login">Login here</a>  
-  <a *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</a>  
   <a *ngIf="!loggedIn" routerLink="/signup">Sign Up</a>
+  <a *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</a>  
+  <a *ngIf="loggedIn && user[2]==='Owner'" (click)="goToMyFamily()">My Family</a>
+  <a *ngIf="loggedIn && user[2]==='Owner'" (click)="logout()" routerLink="/">Assign Saving to Kids</a>
+  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My History Actions</a>
+  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My Targets</a>
+  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My Saving</a>
 </nav>
 <router-outlet></router-outlet>
 

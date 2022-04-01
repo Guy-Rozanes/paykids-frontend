@@ -1,0 +1,11 @@
+.mat-card {
+    margin: 2vh;
+    width: 30vh;
+    height: 18vh;
+}
+
+.main-card {
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+}

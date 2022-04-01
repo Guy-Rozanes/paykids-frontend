@@ -10,11 +10,11 @@
 <br/>
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>First Name</mat-label>
-    <input matInput placeholder="Moshe" #password type="password">
+    <input matInput placeholder="Moshe" #firstName>
 </mat-form-field>
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>LastName</mat-label>
-    <input matInput placeholder="Cohen" #password type="password">
+    <input matInput placeholder="Cohen" #lastName>
 </mat-form-field>
 <br/>
-<button mat-raised-button>Submit</button>
+<button mat-raised-button (click)="signUp(email.value,password.value,firstName.value,lastName.value)">Submit</button>

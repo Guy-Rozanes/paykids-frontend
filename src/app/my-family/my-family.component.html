@@ -1,0 +1,42 @@
+<h1>My Family</h1>
+<div class="main-card">
+<mat-card *ngFor="let person of family; let index=index; let odd=odd; let even=even;" class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Name: {{person[3]}} {{person[4]}}</mat-card-title>
+    <mat-card-subtitle>PayboxId: {{ person[6] }}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
+</div>
+
+<br/>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Email</mat-label>
+  <input matInput placeholder="dana@gmail.com" #email>
+  <br />
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Password</mat-label>
+  <input matInput placeholder="******" #password type="password">
+</mat-form-field>
+<br />
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>First Name</mat-label>
+  <input matInput placeholder="Moshe" #firstName>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>LastName</mat-label>
+  <input matInput placeholder="Cohen" #lastName>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Family Role</mat-label>
+  <input matInput placeholder="123123123" #familyRole>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>PayboxId</mat-label>
+  <input matInput placeholder="123123123" #payBoxId>
+</mat-form-field>
+<br />
+<button mat-raised-button
+  (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,familyRole.value,payBoxId.value)">Add
+  Family Member</button>

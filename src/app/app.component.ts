@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { DataServiceService } from './data-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,18 +12,22 @@ import { DataServiceService } from './data-service.service';
 export class AppComponent implements OnInit {
   title = 'paykids-front';
   loggedIn=false;
-
-  constructor(private data:DataServiceService){}
+  user:any=''
+  constructor(private data:DataServiceService,private router:Router){}
   
   ngOnInit(): void {
     this.data.currentloggedIn.subscribe(loggedIn=>this.loggedIn=loggedIn);
+    this.data.currentUser.subscribe(user=>this.user=user);
   }
 
   logout():void{
     this.loggedIn=false;
     this.data.changeLoggedInStatus(false);
     this.data.initUser(null);
-    console.log(this.loggedIn);
+  }
+
+  goToMyFamily(){
+    this.router.navigate(['my-family',this.user])
   }
 
 }

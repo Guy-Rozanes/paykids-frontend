@@ -3,6 +3,7 @@ import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 import { User } from 'src/models/user';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -10,23 +11,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loggedIn=false;
-  user=null;
-  constructor(public loginService: LoginService,private dataService:DataServiceService,private router:Router) { }
+  loggedIn = false;
+  user = null;
+  constructor(public loginService: LoginService, private dataService: DataServiceService, 
+    private router: Router,private _snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
-    this.dataService.currentloggedIn.subscribe(loggedIn=>this.loggedIn=loggedIn);
-    this.dataService.currentUser.subscribe(user=>this.user=user);
+    this.dataService.currentloggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
+    this.dataService.currentUser.subscribe(user => this.user = user);
   }
 
   login(email: string, password: string): void {
-    this.loginService.login(email, password)
-    sessionStorage.setItem('email',email);
-    this.dataService.changeLoggedInStatus(true);
-    this.dataService.currentloggedIn.subscribe(message=>console.log(message));
-    this.dataService.initUser({'email':email});
-    this.router.navigate(['home',{'email':email}])
+    let response = '';
+    this.loginService.login(email, password).subscribe(data => {
+      response = data;
+      console.log(response)
+      if (response['message'] === 'login successfully') {
+        sessionStorage.setItem('email', email);
+        this.dataService.changeLoggedInStatus(true);
+        this.dataService.initUser(response['user']);
+        this.router.navigate(['home'])
+      }
+      else{
+        this._snackBar.open(response['message']);
+      }
     }
-    
+    );
+
   }
+}
 
