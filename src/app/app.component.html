@@ -1,18 +1,12 @@
-<h1>Welcome to PayKids</h1>
+<h1 (click)="goHomePage()">Welcome to PayKids</h1>
 <nav>
-  <a *ngIf="!loggedIn" routerLink="/login">Login here</a>  
-  <a *ngIf="!loggedIn" routerLink="/signup">Sign Up</a>
-  <a *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</a>  
-  <a *ngIf="loggedIn && user[2]==='Owner'" (click)="goToMyFamily()">My Family</a>
-  <a *ngIf="loggedIn && user[2]==='Owner'" (click)="logout()" routerLink="/">Assign Saving to Kids</a>
-  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My History Actions</a>
-  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My Targets</a>
-  <a *ngIf="loggedIn" (click)="logout()" routerLink="/">My Saving</a>
+  <button mat-raised-button *ngIf="!loggedIn" routerLink="/login">Login here</button>
+  <button mat-raised-button *ngIf="!loggedIn" routerLink="/signup">Sign Up</button>
+  <button mat-raised-button *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</button>
+  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" (click)="goToMyFamily()">My Family</button>
+  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" (click)="logout()" routerLink="/">Assign Saving to Kids</button>
+  <button mat-raised-button *ngIf="loggedIn" routerLink="/my-actions">My History Actions</button>
+  <button mat-raised-button *ngIf="loggedIn" routerLink="/targets">My Targets</button>
+  <button mat-raised-button *ngIf="loggedIn" (click)="logout()" routerLink="/">My Saving</button>
 </nav>
 <router-outlet></router-outlet>
-
-
-
-
-
-

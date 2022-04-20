@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { MyActionsComponent } from './my-actions/my-actions.component';
 import { MyFamilyComponent } from './my-family/my-family.component';
+import { MyTargetsComponent } from './my-targets/my-targets.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
@@ -10,6 +12,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
   { path: 'my-family', component: MyFamilyComponent },
+  { path: 'my-actions', component: MyActionsComponent },
+  { path: 'targets', component: MyTargetsComponent },
 ];
 
 

@@ -13,12 +13,14 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit {
   loggedIn = false;
   user = null;
-  constructor(public loginService: LoginService, private dataService: DataServiceService, 
-    private router: Router,private _snackBar:MatSnackBar) { }
+  constructor(public loginService: LoginService, private dataService: DataServiceService,
+    private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.dataService.currentloggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
-    this.dataService.currentUser.subscribe(user => this.user = user);
+    this.dataService.currentUser.subscribe(user =>{
+      this.user = user
+    });
   }
 
   login(email: string, password: string): void {
@@ -31,8 +33,11 @@ export class LoginComponent implements OnInit {
         this.dataService.changeLoggedInStatus(true);
         this.dataService.initUser(response['user']);
         this.router.navigate(['home'])
+        if (response['user'][7] == 'FREE') {
+          this._snackBar.open('Buy Premium Accout for more features');
+        }
       }
-      else{
+      else {
         this._snackBar.open(response['message']);
       }
     }

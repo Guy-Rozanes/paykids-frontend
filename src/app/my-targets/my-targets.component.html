@@ -1,3 +1,33 @@
-<p>
-  my-targets works!
-</p>
+<h3>My Targets</h3>
+<div *ngIf="user[2]!='Owner'">
+  <h4>targets</h4>
+  <mat-list style="align-items: center;align-content: center;">
+    <mat-list-item *ngFor="let target of targets">
+      <div mat-line>{{target[2]}}</div>
+      <div mat-line> {{target[3]}} </div>
+    </mat-list-item>
+  </mat-list>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Target Name</mat-label>
+    <input matInput placeholder="Sony Playstation 5" #targetName>
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Target Price</mat-label>
+    <input matInput placeholder="1500" #price>
+  </mat-form-field>
+  <br />
+  <button mat-raised-button (click)="addUserTarget(targetName.value,price.value)">Submit</button>
+</div>
+<div class="family-list" *ngIf="user[2]==='Owner'">
+  <div *ngFor="let item of familyTargets | keyvalue">
+    <div style="align-items: center;align-content: center;text-align: center;margin-right: 5vh;">
+      <h4>{{item.key}} targets</h4>
+      <mat-list style="align-items: center;align-content: center;">
+        <mat-list-item *ngFor="let target of item.value">
+          <div mat-line>{{target.target_name}}</div>
+          <div mat-line> {{target.target_price}} </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>

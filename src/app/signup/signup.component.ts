@@ -14,15 +14,20 @@ export class SignupComponent implements OnInit {
   firstName: string = '';
   lastName: string = '';
   familyRole: string = '';
+  familyId: string = '';
   constructor(public loginService: LoginService) { }
 
   ngOnInit(): void {
   }
 
-  signUp(email:string,password:string,firstName:string,lastName:string) {
+  signUp(email: string, password: string, firstName: string, lastName: string) {
     let response = '';
     this.loginService.signUp(email, password, firstName, lastName, 'Owner', null).subscribe(data => {
-      response = data
+      response = data;
+      this.familyId = data.family_id
+      this.loginService.addFamilyAccountType(this.familyId, 'FREE').subscribe(date => {
+        console.log(data)
+      })
     }
     );
     return response;

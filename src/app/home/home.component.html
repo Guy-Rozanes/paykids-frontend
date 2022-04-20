@@ -1,1 +1,46 @@
 <h2>Welcome {{user[0]}}</h2>
+<div *ngIf="user[2]=='Owner'">
+    <h4>Your Kids</h4>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [disabled]="user[7]!='PREMIUM'" *ngFor="let person of family"
+            style="margin: auto;width: 50%;">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{person[3]}} {{person[4]}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div style="display: flex;align-items: center;justify-content: space-evenly;">
+                <div>
+                    <h5>
+                        Actions
+                    </h5>
+                    <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]" style="cursor: pointer;">
+                        <div *ngFor="let i of arr">
+                            {{familyActions[person[0]][i].action_name}} {{familyActions[person[0]][i].action_price}}
+                        </div>
+                    </div>
+                    <div *ngIf="!familyActions[person[0]]">
+                        {{person[3]}} did not entered any action
+                    </div>
+                    ...
+                </div>
+                <div>
+                    <h5>Targets</h5>
+                    <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]" style="cursor: pointer;">
+                        <div *ngFor="let i of arr">
+                            {{familyTargets[person[0]][i].target_name}} {{familyTargets[person[0]][i].target_price}}
+                        </div>
+                    </div>
+                    <div *ngIf="!familyTargets[person[0]]">
+                        {{person[3]}} did not entered any target
+                    </div>
+                    ...
+                </div>
+                <div>
+                    <h5>Current Amount</h5>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <h4 *ngIf="user[7]!='PREMIUM'">For enabling family summary go premium ;)</h4>
+</div>
