@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit {
   family: any = [];
   familyActions: any = {};
   familyTargets: any = {};
-  arr = [1, 2, 3, 4, 5]
+  familyAmount: any = {};
+  arr = [1, 2, 3, 4, 5];
+  arr1 = [1, 2, 3, 4, 5]
   constructor(private data: DataServiceService, private service: LoginService, private router: Router) { }
 
   ngOnInit() {
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
     this.getMyFamily();
     this.getAllFamilyActions();
     this.getAllFamilyTarget();
+    this.getAllFamilyAmount();
   }
   getMyFamily() {
     this.service.getAllFamily(this.user[1]).subscribe(response => this.family = response['message']);
@@ -38,6 +41,11 @@ export class HomeComponent implements OnInit {
       this.familyTargets = data;
     });
   }
+  getAllFamilyAmount() {
+    this.service.getFamilyUsersAmount(this.user[1]).subscribe(data => {
+      this.familyAmount = data;
+    });
+  }
 
   counter(i: number) {
     return new Array(i);
@@ -50,5 +58,7 @@ export class HomeComponent implements OnInit {
   navigateToTarget() {
     this.router.navigate(['targets'])
   }
+
+
 
 }

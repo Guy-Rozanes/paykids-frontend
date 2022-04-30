@@ -4,7 +4,7 @@
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Name: {{person[3]}} {{person[4]}}</mat-card-title>
-      <mat-card-subtitle>PayboxId: {{ person[6] }}</mat-card-subtitle>
+      <mat-card-subtitle>Bank Account: {{ person[6] }}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 </div>
@@ -28,21 +28,28 @@
   <mat-label>LastName</mat-label>
   <input matInput placeholder="Cohen" #lastName>
 </mat-form-field>
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Family Role</mat-label>
-  <input matInput placeholder="123123123" #familyRole>
+<mat-form-field appearance="fill">
+  <mat-label>Role</mat-label>
+  <mat-select [(value)]="selectedRole">
+    <mat-option></mat-option>
+    <mat-option [value]="option.value" *ngFor="let option of roles">{{ option.viewValue }}</mat-option>
+  </mat-select>
 </mat-form-field>
 <mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>PayboxId</mat-label>
-  <input matInput placeholder="123123123" #payBoxId>
+  <mat-label>Bank Account Number</mat-label>
+  <input matInput placeholder="800-0000099999999" #payBoxId>
 </mat-form-field>
 <br />
 <button mat-raised-button
-  (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,familyRole.value,payBoxId.value)">
+  (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,payBoxId.value)">
   Add Family Member</button>
-  <div *ngIf="!accountType">
-    <h2>Go Premium</h2>
-    <div>
-      <button mat-raised-button (click)="initializePayment(10)">Payment of $35</button>
-    </div>
+<div *ngIf="showSpinner">
+  <mat-spinner style="align-self: center;"></mat-spinner>
+  Connecting With Bank Details
+</div>
+<div *ngIf="!accountType">
+  <h2>Go Premium</h2>
+  <div>
+    <button mat-raised-button (click)="initializePayment(10)">Payment of $35</button>
   </div>
+</div>

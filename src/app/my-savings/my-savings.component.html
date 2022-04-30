@@ -1,3 +1,11 @@
-<p>
-  my-savings works!
-</p>
+<h3>My Savings</h3>
+<div style="align-items: center;align-content: center;text-align: center;">
+  <h4>Savings</h4>
+  <mat-list *ngIf="actions!=[]" style="align-items: center;align-content: center;">
+    <mat-list-item (click)="showYourAction(saving[2])" *ngFor="let saving of mySavingCampaigns">
+      <div mat-line>{{saving[2]}}</div>
+      <div mat-line>You will earn {{saving[3]}} ₪</div>
+      <div mat-line>Status: <span *ngIf="saving[4]">Done</span><span *ngIf="!saving[4]">Pending for Action</span></div>
+    </mat-list-item>
+  </mat-list>
+</div>

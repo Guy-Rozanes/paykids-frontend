@@ -1,0 +1,28 @@
+<h2>Assign Missions for Your Kids</h2>
+<div>
+    <mat-form-field appearance="fill">
+        <mat-label>Selected Video</mat-label>
+        <mat-select [(value)]="selectedVideo">
+            <mat-option *ngFor="let video of videos" [value]="video">
+                {{video.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <video id="video1" width="420">
+        <source src="./assets/Allowance.mp4" type="video/mp4" />
+        Browser not suppoerted
+    </video>
+    <mat-form-field appearance="fill">
+        <mat-label>Your Kid</mat-label>
+        <mat-select [(value)]="selectedKid">
+            <mat-option *ngFor="let kid of myKids" [value]="kid">
+                {{kid[0]}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span *ngIf="selectedKid && selectedVideo">
+        it will earn {{selectedKid[0]}} : {{selectedVideo.price}}
+        ({{selectedVideo.viewValue}})
+    </span>
+    <button *ngIf="selectedKid && selectedVideo" (click)="addSavingExc()" mat-raised-button>Submit</button>
+</div>

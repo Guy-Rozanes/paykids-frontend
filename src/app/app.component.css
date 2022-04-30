@@ -5,3 +5,7 @@ nav a{
 .list-card{
     margin-bottom: 20px;
  }
+
+ button {
+    background-color:aqua;
+}

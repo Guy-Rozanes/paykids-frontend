@@ -2,10 +2,10 @@
 <div *ngIf="user[2]!='Owner'">
   <div style="align-items: center;align-content: center;text-align: center;">
     <h4>actions</h4>
-    <mat-list style="align-items: center;align-content: center;">
+    <mat-list *ngIf="actions!=[]" style="align-items: center;align-content: center;">
       <mat-list-item *ngFor="let action of actions">
         <div mat-line>{{action[2]}}</div>
-        <div mat-line> {{action[3]}} </div>
+        <div mat-line> {{action[3]}} ₪</div>
       </mat-list-item>
     </mat-list>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -19,6 +19,7 @@
     </mat-form-field>
     <br />
     <button mat-raised-button (click)="addAction(productName.value,price.value)">Submit</button>
+      <button mat-raised-button (click)="openNfcReader()">Pay with NFC</button>
   </div>
 </div>
 <div class="family-list" *ngIf="user[2]==='Owner'">
@@ -28,7 +29,7 @@
     <mat-list style="align-items: center;align-content: center;">
       <mat-list-item *ngFor="let action of item.value">
         <div mat-line>{{action.action_name}}</div>
-        <div mat-line> {{action.action_price}} </div>
+        <div mat-line> {{action.action_price}} ₪</div>
       </mat-list-item>
     </mat-list>
   </div>

@@ -26,7 +26,6 @@ export class SignupComponent implements OnInit {
       response = data;
       this.familyId = data.family_id
       this.loginService.addFamilyAccountType(this.familyId, 'FREE').subscribe(date => {
-        console.log(data)
       })
     }
     );

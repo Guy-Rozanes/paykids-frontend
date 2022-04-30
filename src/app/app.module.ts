@@ -9,7 +9,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import {
   MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule,
   MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
-  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule,
+  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule,MatProgressSpinnerModule,
 } from '@angular/material';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { LoginService } from './login.service';
@@ -22,6 +22,9 @@ import { MyTargetsComponent } from './my-targets/my-targets.component';
 import { MyFamilyComponent } from './my-family/my-family.component';
 import { MatListModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
+import { NfcComponent } from './nfc/nfc.component';
+import { AssignSavingComponent } from './assign-saving/assign-saving.component';
+import { CampaignScreenComponent } from './campaign-screen/campaign-screen.component';
 
 
 
@@ -35,7 +38,11 @@ import { MatIconModule } from '@angular/material';
     MySavingsComponent,
     MyTargetsComponent,
     MyFamilyComponent,
+    NfcComponent,
+    AssignSavingComponent,
+    CampaignScreenComponent,
   ],
+  entryComponents:[NfcComponent],
   imports: [
     MatListModule,
     HttpClientModule,
@@ -57,6 +64,7 @@ import { MatIconModule } from '@angular/material';
     MatCardModule,
     MatIconModule,
     MatExpansionModule,
+    MatProgressSpinnerModule,
   ],
   providers: [HttpClient, LoginService, DataServiceService, MatSnackBar, { provide: MAT_DIALOG_DATA, useValue: {} },
     {

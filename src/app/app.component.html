@@ -4,9 +4,9 @@
   <button mat-raised-button *ngIf="!loggedIn" routerLink="/signup">Sign Up</button>
   <button mat-raised-button *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</button>
   <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" (click)="goToMyFamily()">My Family</button>
-  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" (click)="logout()" routerLink="/">Assign Saving to Kids</button>
+  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" routerLink="/assign-savings">Assign Saving to Kids</button>
   <button mat-raised-button *ngIf="loggedIn" routerLink="/my-actions">My History Actions</button>
   <button mat-raised-button *ngIf="loggedIn" routerLink="/targets">My Targets</button>
-  <button mat-raised-button *ngIf="loggedIn" (click)="logout()" routerLink="/">My Saving</button>
+  <button mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">My Saving</button>
 </nav>
 <router-outlet></router-outlet>

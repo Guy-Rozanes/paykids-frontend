@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+import * as internal from 'assert';
 
 
 
@@ -22,14 +23,14 @@ export class LoginService {
     return this.http.post(this.root + "login/", JSON.stringify(body), { headers: this.headers });
   }
 
-  signUp(email: string, password: string, firstName: string, lastName: string, familyRole: string = 'Owner', paybox_id: string = null, family_id: string = undefined): Observable<any> {
+  signUp(email: string, password: string, firstName: string, lastName: string, familyRole: string = 'Owner', bankNumber: string = null, family_id: string = undefined): Observable<any> {
     let body = {
       email,
       password,
       firstName,
       lastName,
       familyRole,
-      paybox_id,
+      paybox_id: bankNumber,
     };
     if (family_id) {
       body['family_id'] = family_id
@@ -67,15 +68,14 @@ export class LoginService {
   }
 
   addFamilyAccountType(familyId: string, accountType: string) {
-    let body = {
+    const body = {
       familyId,
       accountType,
     }
     return this.http.post(this.root + `family/account`, JSON.stringify(body), { headers: this.headers })
   }
   editFamilyAccountType(familyId: string, accountType: string) {
-    console.log('aa')
-    let body = {
+    const body = {
       accountType,
     }
     return this.http.put(this.root + `family/premium/${familyId}`, JSON.stringify(body), { headers: this.headers })
@@ -90,12 +90,53 @@ export class LoginService {
   }
 
   addTarget(email: string, targetName: string, targetPrice: string) {
-    let body = {
+    const body = {
       email,
       targetName,
       targetPrice
     }
     return this.http.post(this.root + `targets/`, JSON.stringify(body), { headers: this.headers })
+  }
+
+  addUserAmount(email: string, bankNumber: string, amount: number) {
+    const body = {
+      email,
+      bankNumber,
+      amount
+    }
+    return this.http.post(this.root + `amount/`, JSON.stringify(body), { headers: this.headers })
+  }
+
+  getUserAmount(email: string) {
+    return this.http.get(this.root + `amount/${email}`, { headers: this.headers })
+  }
+
+  getFamilyUsersAmount(familyId: string) {
+    return this.http.get(this.root + `amount/family/${familyId}`, { headers: this.headers })
+  }
+
+  updateUserAmount(userId: string, newAmount: number) {
+    const body = {
+      newAmount,
+    }
+    return this.http.put(this.root + `amount/${userId}`, JSON.stringify(body), { headers: this.headers })
+  }
+
+  getMyKids(familyId: string) {
+    return this.http.get(this.root + `kids/${familyId}`, { headers: this.headers })
+  }
+
+  insertSavings(email: string, videoName: string, savingPrice: number) {
+    let body = {
+      email,
+      videoName,
+      savingPrice,
+    }
+    return this.http.post(this.root + `savings/`, JSON.stringify(body), { headers: this.headers })
+  }
+
+  getMySaving(email: string) {
+    return this.http.get(this.root + `savings/${email}`, { headers: this.headers })
   }
 }
 

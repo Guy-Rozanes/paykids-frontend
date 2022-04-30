@@ -10,13 +10,13 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div style="display: flex;align-items: center;justify-content: space-evenly;">
-                <div>
+                <div class="card">
                     <h5>
                         Actions
                     </h5>
-                    <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]" style="cursor: pointer;">
-                        <div *ngFor="let i of arr">
-                            {{familyActions[person[0]][i].action_name}} {{familyActions[person[0]][i].action_price}}
+                    <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]!=undefiend" style="cursor: pointer;">
+                        <div *ngFor="let i of arr1">
+                            {{familyActions[person[0]][0].action_name}} {{familyActions[person[0]][0].action_price}} ₪
                         </div>
                     </div>
                     <div *ngIf="!familyActions[person[0]]">
@@ -24,11 +24,11 @@
                     </div>
                     ...
                 </div>
-                <div>
+                <div class="card">
                     <h5>Targets</h5>
-                    <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]" style="cursor: pointer;">
+                    <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]!=undefiend" style="cursor: pointer;">
                         <div *ngFor="let i of arr">
-                            {{familyTargets[person[0]][i].target_name}} {{familyTargets[person[0]][i].target_price}}
+                            {{familyTargets[person[0]][i].target_name}} {{familyTargets[person[0]][i].target_price}} ₪
                         </div>
                     </div>
                     <div *ngIf="!familyTargets[person[0]]">
@@ -36,8 +36,10 @@
                     </div>
                     ...
                 </div>
-                <div>
-                    <h5>Current Amount</h5>
+                <div class="card">
+                    <h5>Current Amount:
+                        <span *ngIf="familyAmount[person[0]]">{{familyAmount[person[0]][0].user_amount}}</span>
+                    </h5>
                 </div>
             </div>
         </mat-expansion-panel>

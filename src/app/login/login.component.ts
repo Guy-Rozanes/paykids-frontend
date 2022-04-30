@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     let response = '';
     this.loginService.login(email, password).subscribe(data => {
       response = data;
-      console.log(response)
       if (response['message'] === 'login successfully') {
         sessionStorage.setItem('email', email);
         this.dataService.changeLoggedInStatus(true);

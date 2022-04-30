@@ -1,6 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
+
+interface Role {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-my-family',
@@ -12,31 +18,36 @@ export class MyFamilyComponent implements OnInit {
   private family: Array<any> = []
   paymentHandler: any = null;
   private accountType: boolean = false;
+  private showSpinner: boolean = false;
+  private roles: Role[] = [
+    { value: '0', viewValue: 'Owner' },
+    { value: '1', viewValue: 'Kid' },
+  ];
+  selectedRole = this.roles[1].value;
   constructor(private data: DataServiceService, private loginService: LoginService) { }
 
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
-      this.accountType=this.user[7]=='PREMIUM'
+      this.accountType = this.user[7] == 'PREMIUM'
     });
-    console.log(this.user);
     this.getFamily()
     this.invokeStripe()
   }
 
   getFamily() {
-    console.log(this.user[1])
     this.loginService.getAllFamily(this.user[1]).subscribe(data => {
       this.family = data['message'];
-      console.log(this.family);
     });
   }
 
-  addFamilyMember(email, password, firstName, lastName, familyRole, paybox_id) {
+  addFamilyMember(email, password, firstName, lastName, paybox_id) {
     let response = '';
-    console.log(this.user[1])
-    this.loginService.signUp(email, password, firstName, lastName, familyRole, paybox_id, this.user[1]).subscribe(data => {
-      response = data
+    this.showSpinner = true;
+    this.delay(20000000000);
+    this.loginService.signUp(email, password, firstName, lastName, this.selectedRole, paybox_id, this.user[1]).subscribe(data => {
+      response = data;
+      this.showSpinner = false;
     }
     );
     this.family.push(
@@ -46,25 +57,23 @@ export class MyFamilyComponent implements OnInit {
         password,
         firstName,
         lastName,
-        familyRole,
+        this.selectedRole,
         paybox_id,
       ])
+    this.addAccountAmount(email, paybox_id);
   }
   initializePayment(amount: number) {
     this.loginService.editFamilyAccountType(this.user[1], 'PREMIUM').subscribe((response: any) => {
-      console.log('asdasd')
-      console.log(response)
       if (response.message == 'ok') {
         this.accountType = true;
+        this.user[7] = 'PREMIUM';
+        this.data.initUser(this.user);
       }
     })
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
       locale: 'auto',
-      token: function (stripeToken: any) {
-        console.log({ stripeToken })
-        alert('Stripe token generated!');
-      }
+      token: function (stripeToken: any) { }
     });
     paymentHandler.open({
       name: 'PayKids Premium Account',
@@ -73,7 +82,6 @@ export class MyFamilyComponent implements OnInit {
     });
   }
   invokeStripe() {
-    console.log(this.user[1])
     if (!window.document.getElementById('stripe-script')) {
       const script = window.document.createElement("script");
       script.id = "stripe-script";
@@ -84,7 +92,6 @@ export class MyFamilyComponent implements OnInit {
           key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
           locale: 'auto',
           token: function (stripeToken: any) {
-            console.log(stripeToken)
             alert('Payment has been successfull!');
           }
         });
@@ -94,7 +101,15 @@ export class MyFamilyComponent implements OnInit {
       //   this.paymentHandler.stripToken.card.last4,
       //   `${this.paymentHandler.stripeToken.card.exp_month}/${this.paymentHandler.stripeToken.card.exp_year}`
       // )
-
     }
+  }
+
+  addAccountAmount(email: string, bankNumber: string) {
+    let amount = Math.floor(Math.random() * 500) + 500;
+    this.loginService.addUserAmount(email, bankNumber, amount).subscribe(data => { });
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

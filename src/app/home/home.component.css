@@ -3,3 +3,9 @@
     align-items: center;
     justify-content: space-evenly;
 }
+
+.card {
+    height: 24vh;
+    width: 24vh;
+    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 66%);
+}
