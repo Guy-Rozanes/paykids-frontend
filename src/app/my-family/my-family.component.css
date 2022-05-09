@@ -2,10 +2,15 @@
     margin: 2vh;
     width: 30vh;
     height: 18vh;
+    background-color: #2B303A;
 }
 
 .main-card {
     height: 35vh;
     display: flex;
     justify-content: center;
+}
+
+mat-card-title,mat-card-subtitle{
+    color:#EEE5E9 ;
 }

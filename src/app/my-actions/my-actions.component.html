@@ -18,20 +18,25 @@
       <input matInput placeholder="20" #price>
     </mat-form-field>
     <br />
-    <button mat-raised-button (click)="addAction(productName.value,price.value)">Submit</button>
-      <button mat-raised-button (click)="openNfcReader()">Pay with NFC</button>
+    <button class="primary-button" mat-raised-button (click)="addAction(productName.value,price.value)">Submit</button>
+    <button class="primary-button" mat-raised-button (click)="openNfcReader()">Pay with NFC</button>
   </div>
 </div>
 <div class="family-list" *ngIf="user[2]==='Owner'">
-<div *ngFor="let item of familyActions | keyvalue">
-  <div style="align-items: center;align-content: center;text-align: center;margin-right: 5vh;">
-    <h4>{{item.key}} actions</h4>
-    <mat-list style="align-items: center;align-content: center;">
-      <mat-list-item *ngFor="let action of item.value">
-        <div mat-line>{{action.action_name}}</div>
-        <div mat-line> {{action.action_price}} ₪</div>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let item of family" label="{{item}}">
+      <div *ngIf="familyActionKids.includes(item); else no_actions">
+        <mat-list style="align-items: center;align-content: center;">
+          <mat-list-item *ngFor="let action of familyActions[item]">
+            <div mat-line>{{action.action_name}}</div>
+            <div mat-line> {{action.action_price}} ₪</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <ng-template #no_actions>
+        {{item}} did not insert any action
+      </ng-template>
+
+    </mat-tab>
+  </mat-tab-group>
 </div>

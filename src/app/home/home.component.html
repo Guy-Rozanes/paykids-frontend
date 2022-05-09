@@ -1,4 +1,9 @@
 <h2>Welcome {{user[0]}}</h2>
+<mat-icon (click)="openNot()" *ngIf="user[2]==='Owner'" matBadge="{{unseen_actions.length}}" matBadgeColor="warn">home</mat-icon>
+<span class="cdk-visually-hidden">
+    Example with a home icon with overlaid badge showing the number 15
+</span>
+
 <div *ngIf="user[2]=='Owner'">
     <h4>Your Kids</h4>
     <mat-accordion class="example-headers-align">
@@ -11,10 +16,11 @@
             </mat-expansion-panel-header>
             <div style="display: flex;align-items: center;justify-content: space-evenly;">
                 <div class="card">
-                    <h5>
+                    <h3>
                         Actions
-                    </h5>
-                    <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]!=undefiend" style="cursor: pointer;">
+                    </h3>
+                    <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]!=undefiend"
+                        style="cursor: pointer;">
                         <div *ngFor="let i of arr1">
                             {{familyActions[person[0]][0].action_name}} {{familyActions[person[0]][0].action_price}} ₪
                         </div>
@@ -25,10 +31,14 @@
                     ...
                 </div>
                 <div class="card">
-                    <h5>Targets</h5>
-                    <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]!=undefiend" style="cursor: pointer;">
-                        <div *ngFor="let i of arr">
-                            {{familyTargets[person[0]][i].target_name}} {{familyTargets[person[0]][i].target_price}} ₪
+                    <h3>Targets</h3>
+                    <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]!=undefiend"
+                        style="cursor: pointer;">
+                        <div *ngFor="let i of arr1">
+                            <span *ngIf="familyTargets[person[0]][i]">
+                                {{familyTargets[person[0]][i].target_name}} {{familyTargets[person[0]][i].target_price}}
+                                ₪
+                            </span>
                         </div>
                     </div>
                     <div *ngIf="!familyTargets[person[0]]">
@@ -37,12 +47,65 @@
                     ...
                 </div>
                 <div class="card">
-                    <h5>Current Amount:
+                    <h3>Current Amount:
                         <span *ngIf="familyAmount[person[0]]">{{familyAmount[person[0]][0].user_amount}}</span>
-                    </h5>
+                    </h3>
                 </div>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
     <h4 *ngIf="user[7]!='PREMIUM'">For enabling family summary go premium ;)</h4>
+</div>
+<div *ngIf="user[2]!='Owner'">
+    <h3>Current Amount: {{myAmount}} ₪</h3>
+    <div class="main-card">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Last Actions</mat-card-title>
+                <mat-card-subtitle>
+                    <div *ngIf="myActions!=[]">
+                        <div *ngFor="let action of myActions.slice(0,4)">
+                            {{action[2]}} {{action[3]}} ₪
+                        </div>
+                    </div>
+                    <div *ngIf="myActions==[]">
+                        Start inserting your last actions ...
+                    </div>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Your Targets</mat-card-title>
+                <mat-card-subtitle>
+                    <div *ngIf="myTargets;else empty_targets">
+                        <div *ngFor="let target of myTargets.slice(0,4)">
+                            {{target[2]}} {{target[3]}} ₪
+                        </div>
+                    </div>
+                    <ng-template #empty_targets>
+                        Please start insert your targets
+                    </ng-template>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Your Campaigns</mat-card-title>
+                <mat-card-subtitle>
+                    <div *ngIf="mySavings.length!=0;else empty_saving">
+                        <div *ngFor="let saving of mySavings.slice(1,5)">
+                            {{saving[2]}} {{saving[3]}} ₪
+                        </div>
+                    </div>
+                    <ng-template #empty_saving>
+                        You finished all your campaigns
+                    </ng-template>
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </div>
 </div>

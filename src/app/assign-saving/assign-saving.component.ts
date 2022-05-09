@@ -1,5 +1,6 @@
 declare var require: any;
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 interface Video {
@@ -18,9 +19,14 @@ export class AssignSavingComponent implements OnInit {
   private user: any = this.data.currentUser.subscribe(user => this.user = user);
   private myKids: any = {};
   videos: Video[] = [
-    { value: 'video-0', viewValue: 'Allowance', url: 'src/app/assign-saving/videos/Allowance.mp4', price: 35 },
-    { value: 'video-1', viewValue: 'Finance Words', url: 'src\app\assign-saving\videos\Finance words.mp4', price: 40 },
+    { value: 'video-0', viewValue: 'Allowance', url: '../../assets/Allowance.mp4', price: 35 },
+    { value: 'video-1', viewValue: 'Finance Words', url: '../../assets/Finance words.mp4', price: 40 },
   ];
+
+  videoToShow = {
+    'Allowance': '../../assets/Allowance.mp4',
+    'Finance Words': '../../assets/Finance words.mp4',
+  }
   selectedVideo: Video = undefined;
   selectedKid = '';
   ngOnInit() {
@@ -39,5 +45,9 @@ export class AssignSavingComponent implements OnInit {
 
   addSavingExc() {
     this.service.insertSavings(this.selectedKid[0], this.selectedVideo.viewValue, this.selectedVideo.price).subscribe(data => { });
+  }
+
+  getVideo(){
+    console.log(this.videoToShow[this.selectedVideo.viewValue])
   }
 }

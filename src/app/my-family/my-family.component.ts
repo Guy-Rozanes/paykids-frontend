@@ -1,4 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { BankLoadingComponent } from '../bank-loading/bank-loading.component';
 
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
@@ -24,7 +26,7 @@ export class MyFamilyComponent implements OnInit {
     { value: '1', viewValue: 'Kid' },
   ];
   selectedRole = this.roles[1].value;
-  constructor(private data: DataServiceService, private loginService: LoginService) { }
+  constructor(private data: DataServiceService, private loginService: LoginService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
@@ -45,22 +47,29 @@ export class MyFamilyComponent implements OnInit {
     let response = '';
     this.showSpinner = true;
     this.delay(20000000000);
-    this.loginService.signUp(email, password, firstName, lastName, this.selectedRole, paybox_id, this.user[1]).subscribe(data => {
-      response = data;
-      this.showSpinner = false;
-    }
-    );
-    this.family.push(
-      [
-        email,
-        this.user[1],
-        password,
-        firstName,
-        lastName,
-        this.selectedRole,
-        paybox_id,
-      ])
-    this.addAccountAmount(email, paybox_id);
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(BankLoadingComponent)
+      setTimeout(() => {
+        dialogRef.close()
+        dialogRef.afterClosed().subscribe(data => {
+          this.loginService.signUp(email, password, firstName, lastName, this.selectedRole, paybox_id, this.user[1]).subscribe(data => {
+            this.family.push(
+              [
+                email,
+                this.user[1],
+                password,
+                firstName,
+                lastName,
+                this.selectedRole,
+                paybox_id,
+              ])
+            this.addAccountAmount(email, paybox_id);
+          })
+        })
+      }, 10000)
+    }, 2000);
+
+
   }
   initializePayment(amount: number) {
     this.loginService.editFamilyAccountType(this.user[1], 'PREMIUM').subscribe((response: any) => {

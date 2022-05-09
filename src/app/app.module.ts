@@ -9,9 +9,10 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import {
   MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule,
   MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
-  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule,MatProgressSpinnerModule,
+  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule, MatProgressSpinnerModule, MatBadgeModule,MatTabsModule,
 } from '@angular/material';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import {OverlayModule} from '@angular/cdk/overlay';
 import { LoginService } from './login.service';
 import { DataServiceService } from './data-service.service';
 import { HomeComponent } from './home/home.component';
@@ -25,6 +26,8 @@ import { MatIconModule } from '@angular/material';
 import { NfcComponent } from './nfc/nfc.component';
 import { AssignSavingComponent } from './assign-saving/assign-saving.component';
 import { CampaignScreenComponent } from './campaign-screen/campaign-screen.component';
+import { NotifcationComponent } from './notifcation/notifcation.component';
+import { BankLoadingComponent } from './bank-loading/bank-loading.component';
 
 
 
@@ -41,8 +44,10 @@ import { CampaignScreenComponent } from './campaign-screen/campaign-screen.compo
     NfcComponent,
     AssignSavingComponent,
     CampaignScreenComponent,
+    NotifcationComponent,
+    BankLoadingComponent,
   ],
-  entryComponents:[NfcComponent],
+  entryComponents: [NfcComponent, CampaignScreenComponent,NotifcationComponent,BankLoadingComponent],
   imports: [
     MatListModule,
     HttpClientModule,
@@ -65,6 +70,9 @@ import { CampaignScreenComponent } from './campaign-screen/campaign-screen.compo
     MatIconModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatBadgeModule,
+    OverlayModule,
+    MatTabsModule,
   ],
   providers: [HttpClient, LoginService, DataServiceService, MatSnackBar, { provide: MAT_DIALOG_DATA, useValue: {} },
     {

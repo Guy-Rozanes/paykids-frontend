@@ -15,11 +15,14 @@ export class AppComponent implements OnInit {
   loggedIn = false;
   user: any = ''
   family: any = {};
+  familyActions = {};
+  unseen_actions = [];
   constructor(private data: DataServiceService, private router: Router, private service: LoginService) { }
 
   ngOnInit(): void {
     this.data.currentloggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
     this.data.currentUser.subscribe(user => this.user = user);
+    this.getAllFamilyActions();
   }
 
   logout(): void {
@@ -40,5 +43,21 @@ export class AppComponent implements OnInit {
   getMyFamily() {
     this.service.getAllFamily(this.user[1]).subscribe(response => this.family = response);
   }
+
+  getAllFamilyActions() {
+    this.service.getAllFamilyActions(this.user[1]).subscribe(data => {
+      console.log(data)
+      this.familyActions = data;
+      for (let item of Object.entries(this.familyActions)) {
+        for (let action of item) {
+          if (!action['action_seen']) {
+            this.unseen_actions.push(item)
+          }
+        }
+      }
+      console.log(this.unseen_actions)
+    });
+  }
+
 
 }

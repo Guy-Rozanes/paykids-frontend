@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentloggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
-    this.dataService.currentUser.subscribe(user =>{
+    this.dataService.currentUser.subscribe(user => {
       this.user = user
     });
   }
@@ -33,11 +33,15 @@ export class LoginComponent implements OnInit {
         this.dataService.initUser(response['user']);
         this.router.navigate(['home'])
         if (response['user'][7] == 'FREE') {
-          this._snackBar.open('Buy Premium Accout for more features');
+          this._snackBar.open('Buy Premium Accout for more features', undefined, {
+            panelClass: ['snackBar'],
+          });
         }
       }
       else {
-        this._snackBar.open(response['message']);
+        this._snackBar.open(response['message'],undefined,{
+          panelClass: ['snackBar'],
+        });
       }
     }
     );

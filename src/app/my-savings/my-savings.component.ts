@@ -19,15 +19,17 @@ export class MySavingsComponent implements OnInit {
     { value: 'video-0', viewValue: 'Allowance', url: 'src/app/assign-saving/videos/Allowance.mp4', price: 35 },
     { value: 'video-1', viewValue: 'Finance Words', url: 'src\app\assign-saving\videos\Finance words.mp4', price: 40 },
   ];
+  private amount;
   private mySavingCampaigns = [];
   private user: any = this.data.currentUser.subscribe(user => this.user = user);
-  constructor(private service: LoginService, private data: DataServiceService,public dialog: MatDialog) { }
+  constructor(private service: LoginService, private data: DataServiceService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
     });
     this.mySavings();
+    this.getUserAmount();
   }
 
   mySavings() {
@@ -36,12 +38,22 @@ export class MySavingsComponent implements OnInit {
     });
   }
 
-  showYourAction(videoName){
-    const dialogRef = this.dialog.open(CampaignScreenComponent,{
-      data:{
-        videoName,
+  getUserAmount() {
+    this.service.getUserAmount(this.user[0]).subscribe(
+      data => {
+        this.amount = data['message'][0][2];
+      }
+    )
+  }
+
+  showYourAction(saving) {
+    const dialogRef = this.dialog.open(CampaignScreenComponent, {
+      data: {
+        saving,
+        user: this.user,
+        amount:this.amount,
       }
     });
-    
+
   }
 }

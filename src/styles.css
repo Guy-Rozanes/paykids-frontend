@@ -1,5 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
 
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #EEE5E9;
+    color: #2B303A;
+}
+
+.primary-button {
+    background-color: #D64933;
+}
+
+.snackBar{
+    background-color: #D64933;
+    color:#2B303A ;
+}
+
+.mat-dialog-container{
+    background-color: #7C7C7C;
+}
+
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+    background: #D64933;
+  } 

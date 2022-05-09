@@ -1,4 +1,13 @@
-.family-list{
+.family-list {
     display: flex;
     justify-content: center;
 }
+
+mat-list {
+    flex-grow: 1;
+    overflow: auto;
+    height: 36vh;
+}
+
+
+

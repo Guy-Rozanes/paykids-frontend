@@ -16,18 +16,23 @@
     <input matInput placeholder="1500" #price>
   </mat-form-field>
   <br />
-  <button mat-raised-button (click)="addUserTarget(targetName.value,price.value)">Submit</button>
+  <button class="primary-button" mat-raised-button (click)="addUserTarget(targetName.value,price.value)">Submit</button>
 </div>
 <div class="family-list" *ngIf="user[2]==='Owner'">
-  <div *ngFor="let item of familyTargets | keyvalue">
-    <div style="align-items: center;align-content: center;text-align: center;margin-right: 5vh;">
-      <h4>{{item.key}} targets</h4>
-      <mat-list style="align-items: center;align-content: center;">
-        <mat-list-item *ngFor="let target of item.value">
-          <div mat-line>{{target.target_name}}</div>
-          <div mat-line> {{target.target_price}} ₪</div>
-        </mat-list-item>
-      </mat-list>
-    </div>
-  </div>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let item of family" label="{{item}}">
+      <div *ngIf="familyTargetsKids.includes(item); else no_targets">
+        <mat-list style="align-items: center;align-content: center;">
+          <mat-list-item *ngFor="let target of familyTargets[item]">
+            <div mat-line>{{target.target_name}}</div>
+            <div mat-line> {{target.target_price}} ₪</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <ng-template #no_targets>
+        {{item}} did not insert any targets
+      </ng-template>
+
+    </mat-tab>
+  </mat-tab-group>
 </div>

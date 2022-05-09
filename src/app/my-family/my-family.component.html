@@ -40,16 +40,15 @@
   <input matInput placeholder="800-0000099999999" #payBoxId>
 </mat-form-field>
 <br />
-<button mat-raised-button
+<button class="primary-button" mat-raised-button
   (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,payBoxId.value)">
   Add Family Member</button>
 <div *ngIf="showSpinner">
-  <mat-spinner style="align-self: center;"></mat-spinner>
-  Connecting With Bank Details
+  
 </div>
 <div *ngIf="!accountType">
   <h2>Go Premium</h2>
   <div>
-    <button mat-raised-button (click)="initializePayment(10)">Payment of $35</button>
+    <button class="primary-button" mat-raised-button (click)="initializePayment(10)">Payment of $35</button>
   </div>
 </div>

@@ -1,12 +1,31 @@
-<h1 (click)="goHomePage()">Welcome to PayKids</h1>
-<nav>
-  <button mat-raised-button *ngIf="!loggedIn" routerLink="/login">Login here</button>
-  <button mat-raised-button *ngIf="!loggedIn" routerLink="/signup">Sign Up</button>
-  <button mat-raised-button *ngIf="loggedIn" (click)="logout()" routerLink="/login">Logout</button>
-  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" (click)="goToMyFamily()">My Family</button>
-  <button mat-raised-button *ngIf="loggedIn && user[2]==='Owner'" routerLink="/assign-savings">Assign Saving to Kids</button>
-  <button mat-raised-button *ngIf="loggedIn" routerLink="/my-actions">My History Actions</button>
-  <button mat-raised-button *ngIf="loggedIn" routerLink="/targets">My Targets</button>
-  <button mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">My Saving</button>
+<div style="background-color: #7C7C7C;margin-top: -3vh;box-shadow: 1px 2px 21px black;">
+  <div (click)="goHomePage()" class="header" style="display: flex;justify-content: center;">
+    <table>
+      <tr>
+        <td>
+          <h1>Welcome to PayKids</h1>
+        </td>
+        <td><img src="../assets/bitcoin_foxy.png"
+            style="width: 14vh;height: 14vh;margin-bottom: -4vh;margin-left: -3vh;">
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<br /><br />
+<nav style="display: flex;justify-content: center;">
+  <button class="primary-button main-nav" mat-raised-button *ngIf="!loggedIn" routerLink="/login">Login here</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="!loggedIn" routerLink="/signup">Sign Up</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" (click)="logout()"
+    routerLink="/login">Logout</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn && user[2]==='Owner'"
+    (click)="goToMyFamily()">My Family</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn && user[2]==='Owner'"
+    routerLink="/assign-savings">Assign Saving to Kids</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-actions">My History
+    Actions</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/targets">My Targets</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">My Saving</button>
 </nav>
+
 <router-outlet></router-outlet>

@@ -1,23 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-interface Video {
-  value: string;
-  viewValue: string;
-  url: string;
-  price: number;
-}
+import { Component, ViewChild, ElementRef, OnInit, Inject } from "@angular/core";
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from "@angular/material";
+import { LoginService } from "../login.service";
+
 @Component({
-  selector: 'app-campaign-screen',
-  templateUrl: './campaign-screen.component.html',
-  styleUrls: ['./campaign-screen.component.css']
+  selector: "campaign-screen",
+  templateUrl: "./campaign-screen.component.html",
+  styleUrls: ["./campaign-screen.component.css"]
 })
 export class CampaignScreenComponent implements OnInit {
-  videos = {
-    'Allowance': 'src/app/assign-saving/videos/Allowance.mp4',
-    'Finance words': 'src\app\assign-saving\videos\Finance words.mp4',
-  }
-  constructor() { }
+  skipped = [];
+  constructor(private dialogRef: MatDialogRef<CampaignScreenComponent>,
+    private _snackBar: MatSnackBar,
+    private service: LoginService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
 
-  ngOnInit() {
   }
+  videoToShow = {
+    'Allowance': '../../assets/Allowance.mp4',
+    'Finance Words': '../../assets/Finance words.mp4',
+  }
+  ngOnInit(): void {
+    console.log(this.data.saving)
+    this.listener();
+  }
+  listener() {
+    const $video = document.querySelector("video");
 
+    const onTimeUpdate = event => {
+      if (checkSkipped(event.target.currentTime)) {
+        this.skipped.push('skipped');
+        console.log(this.skipped);
+      }
+    }
+
+    let prevTime = 0;
+    const checkSkipped = currentTime => {
+      const skip = [];
+      // only record when user skip more than 2 seconds
+      const skipThreshold = 2;
+
+      // user skipped part of the video
+      if (currentTime - prevTime > skipThreshold) {
+        skip.push({
+          periodSkipped: currentTime - prevTime,
+          startAt: prevTime,
+          endAt: currentTime,
+        });
+        prevTime = currentTime;
+        return skip;
+      }
+
+      prevTime = currentTime;
+      return false;
+    }
+
+    $video.addEventListener("play", e => console.log('play'));
+    $video.addEventListener("playing", e => console.log('playing'));
+
+    $video.addEventListener("timeupdate", onTimeUpdate);
+
+    $video.addEventListener("ended", e => {
+      console.log(this.data.amount);
+      console.log(this.data);
+      this.service.updateSavingStatus(this.data.saving[1]).subscribe(data =>
+        this._snackBar.open(data['message'], undefined, {
+          panelClass: ['snackBar'],
+        }
+        )
+      );
+      const newAmount = this.data.amount + parseInt(this.data.saving[3])
+      this.service.updateUserAmount(this.data.user[0], newAmount).subscribe(data => console.log(data));
+    });
+    $video.addEventListener("pause", e => console.log('pause'));
+  }
 }

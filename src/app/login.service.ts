@@ -138,5 +138,13 @@ export class LoginService {
   getMySaving(email: string) {
     return this.http.get(this.root + `savings/${email}`, { headers: this.headers })
   }
+
+  updateSavingStatus(savingId: string) {
+    return this.http.put(this.root + `savings/${savingId}`, { headers: this.headers })
+  }
+
+  updateActionAsMarked(actionId: string) {
+    return this.http.put(this.root + `actions/${actionId}`, { headers: this.headers })
+  }
 }
 

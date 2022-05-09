@@ -9,3 +9,45 @@
     width: 24vh;
     box-shadow: 0 5px 10px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 66%);
 }
+
+.main-card {
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    margin-right: -11vh;
+}
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+    background-color: #7C7C7C;
+    color: #EEE5E9;
+}
+
+mat-expansion-panel-header {
+    background-color: #92DCE5;
+}
+
+mat-panel-title{
+    color: #2B303A;
+}
+
+.card{
+    background-color: #2B303A;
+    color:#EEE5E9;
+}
+
+.mat-card{
+    background-color: #2B303A;
+    color:#EEE5E9;
+    margin-right: 5vh;
+    height: 17vh;
+}
+
+.mat-card-subtitle{
+    color:#EEE5E9;
+}
+
+.mat-card-header-text{
+    margin-left: -1vh;
+}

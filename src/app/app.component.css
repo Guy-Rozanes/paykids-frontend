@@ -1,11 +1,28 @@
-nav a{
+nav a {
     margin-left: 3px;
 }
 
-.list-card{
+.list-card {
     margin-bottom: 20px;
- }
+}
 
- button {
-    background-color:aqua;
+
+.main-nav {
+    margin-right: 1vh;
+}
+
+
+
+.header h1 {
+    position: relative;
+    top: 18px;
+    left: 10px;
+}
+
+img {
+    transition: transform .7s ease-in-out;
+}
+
+img:hover {
+    transform: rotate(360deg);
 }
