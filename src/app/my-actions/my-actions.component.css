@@ -7,7 +7,9 @@ mat-list {
     flex-grow: 1;
     overflow: auto;
     height: 36vh;
+    cursor: n-resize;
 }
+
 
 
 

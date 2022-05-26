@@ -18,24 +18,32 @@ export class MySavingsComponent implements OnInit {
   videos: Video[] = [
     { value: 'video-0', viewValue: 'Allowance', url: 'src/app/assign-saving/videos/Allowance.mp4', price: 35 },
     { value: 'video-1', viewValue: 'Finance Words', url: 'src\app\assign-saving\videos\Finance words.mp4', price: 40 },
+    { value: 'video-2', viewValue: 'Family Savings', url: '../../assets/Family Savings.mp4', price: 45 },
+    { value: 'video-3', viewValue: 'Income and Outcome', url: '../../assets/Income and Outcome.mp4', price: 40 },
+    { value: 'video-4', viewValue: 'Supermarket Shopping', url: '../../assets/Supermarket Shopping.mp4', price: 50 },
   ];
   private amount;
   private mySavingCampaigns = [];
+  private savingKids = [];
+  family = [];
   private user: any = this.data.currentUser.subscribe(user => this.user = user);
   constructor(private service: LoginService, private data: DataServiceService, public dialog: MatDialog) { }
-
+  familySaving = {};
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
+      console.log(this.user)
     });
     this.mySavings();
     this.getUserAmount();
+    this.getFamily();
+    this.getAllFamilySavings();
   }
 
   mySavings() {
     this.service.getMySaving(this.user[0]).subscribe(data => {
       this.mySavingCampaigns = data['message']
-    });
+    })
   }
 
   getUserAmount() {
@@ -46,12 +54,32 @@ export class MySavingsComponent implements OnInit {
     )
   }
 
+  getFamily() {
+    this.service.getAllFamily(this.user[1]).subscribe(data => {
+      const family = data['message'];
+      for (let item of family) {
+        if (item[2] != 'Owner') {
+          this.family.push(item[0])
+        }
+      }
+      console.log(this.family)
+    });
+  }
+
+  getAllFamilySavings() {
+    this.service.getFamilySavings(this.user[1]).subscribe(data => {
+      this.familySaving = data['message'];
+      this.savingKids = Object.keys(this.familySaving);
+      console.log(this.familySaving)
+    });
+  }
+
   showYourAction(saving) {
     const dialogRef = this.dialog.open(CampaignScreenComponent, {
       data: {
         saving,
         user: this.user,
-        amount:this.amount,
+        amount: this.amount,
       }
     });
 

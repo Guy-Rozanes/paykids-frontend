@@ -1,11 +1,33 @@
-<h3>My Savings</h3>
-<div style="align-items: center;align-content: center;text-align: center;">
-  <h4>Savings</h4>
-  <mat-list *ngIf="actions!=[]" style="align-items: center;align-content: center;">
-    <mat-list-item (click)="showYourAction(saving)" *ngFor="let saving of mySavingCampaigns">
-      <div mat-line>{{saving[2]}}</div>
-      <div mat-line>You will earn {{saving[3]}} ₪</div>
-      <div mat-line>Status: <span *ngIf="saving[4]">Done</span><span *ngIf="!saving[4]">Pending for Action</span></div>
-    </mat-list-item>
-  </mat-list>
+<div *ngIf="user[2]!='Owner'">
+  <h3>My Savings</h3>
+  <div style="align-items: center;align-content: center;text-align: center;">
+    <h4>Savings</h4>
+    <mat-list *ngIf="actions!=[]" style="align-items: center;align-content: center;">
+      <mat-list-item (click)="showYourAction(saving)" *ngFor="let saving of mySavingCampaigns">
+        <div mat-line>{{saving[2]}}</div>
+        <div mat-line>You will earn {{saving[3]}} ₪</div>
+        <div mat-line>Status: <span *ngIf="saving[4]">Done</span><span *ngIf="!saving[4]">Pending for Action</span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+
+<div class="family-list" *ngIf="user[2]==='Owner'">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let item of family" label="{{item}}">
+      <div *ngIf="savingKids.includes(item); else no_actions">
+        <mat-list style="align-items: center;align-content: center;">
+          <mat-list-item *ngFor="let saving of familySaving[item]">
+            <div mat-line>{{saving.saving_name}}</div>
+            <div mat-line> {{saving.saving_price}} ₪</div>
+            <div mat-line>{{saving.status ? 'Done' : 'Pending for Action'}}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <ng-template #no_actions>
+        {{item}} did not have any exercise
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 </div>

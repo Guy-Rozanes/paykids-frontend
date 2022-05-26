@@ -28,6 +28,9 @@ import { AssignSavingComponent } from './assign-saving/assign-saving.component';
 import { CampaignScreenComponent } from './campaign-screen/campaign-screen.component';
 import { NotifcationComponent } from './notifcation/notifcation.component';
 import { BankLoadingComponent } from './bank-loading/bank-loading.component';
+import { ModifyUserComponent } from './modify-user/modify-user.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PremiumWelcomeComponent } from './premium-welcome/premium-welcome.component';
 
 
 
@@ -46,8 +49,10 @@ import { BankLoadingComponent } from './bank-loading/bank-loading.component';
     CampaignScreenComponent,
     NotifcationComponent,
     BankLoadingComponent,
+    ModifyUserComponent,
+    PremiumWelcomeComponent,
   ],
-  entryComponents: [NfcComponent, CampaignScreenComponent,NotifcationComponent,BankLoadingComponent],
+  entryComponents: [NfcComponent, CampaignScreenComponent,NotifcationComponent,BankLoadingComponent,ModifyUserComponent,PremiumWelcomeComponent],
   imports: [
     MatListModule,
     HttpClientModule,
@@ -73,6 +78,8 @@ import { BankLoadingComponent } from './bank-loading/bank-loading.component';
     MatBadgeModule,
     OverlayModule,
     MatTabsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [HttpClient, LoginService, DataServiceService, MatSnackBar, { provide: MAT_DIALOG_DATA, useValue: {} },
     {

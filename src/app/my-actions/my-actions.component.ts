@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 import { NfcComponent } from '../nfc/nfc.component';
@@ -14,6 +15,7 @@ export class MyActionsComponent implements OnInit {
   familyActions = {};
   familyActionKids = [];
   family = [];
+  selectedIndexNumber = 0;
   private user: any = this.dataService.currentUser.subscribe(user => this.user = user);
   randomProducts = [
     { 'product_name': 'Gum', 'product_price': 2 },
@@ -27,7 +29,7 @@ export class MyActionsComponent implements OnInit {
     { 'product_name': 'Fuze Tea', 'product_price': 7 },
   ]
   private userCurrentAmount = 0;
-  constructor(private dataService: DataServiceService, private service: LoginService, public dialog: MatDialog) {
+  constructor(private dataService: DataServiceService, private service: LoginService, public dialog: MatDialog, private router: ActivatedRoute, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class MyActionsComponent implements OnInit {
     });
     this.service.getAllUserActions(this.user[0]).subscribe(actions => {
       if (actions['message'] != 'User doesnt have actions') {
-        this.actions = actions['message']
+        this.actions = actions['message'];
       }
     });
     this.getAllFamilyActions()
@@ -55,6 +57,8 @@ export class MyActionsComponent implements OnInit {
             price
           ],
         )
+      } else {
+        this._snackBar.open(response['message'])
       }
     })
   }
@@ -92,9 +96,24 @@ export class MyActionsComponent implements OnInit {
           this.family.push(item[0])
         }
       }
+      this.selectedIndexNumber = this.selectedIndex();
     });
   }
 
+  selectedIndex() {
+    const userId = this.router.snapshot.paramMap.get('userId')
+    if (userId) {
+      console.log(userId)
+      for (let i = 0; i < this.family.length; i++) {
+        if (this.family[i][0] == userId) {
+          return i;
+        }
+      }
+    }
+    else {
+      return 0;
+    }
+  }
 }
 
 

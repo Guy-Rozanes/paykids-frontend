@@ -1,0 +1,18 @@
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Email</mat-label>
+  <input matInput [formControl]="inputFormControl" #email value="{{data.person[0]}}">
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Password</mat-label>
+  <input matInput placeholder="******" #password type="a" value="{{data.person[6]}}">
+</mat-form-field>
+<br />
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>First Name</mat-label>
+  <input matInput placeholder="Moshe" #firstName value="{{data.person[3]}}">
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>LastName</mat-label>
+  <input matInput placeholder="Cohen" #lastName value="{{data.person[4]}}">
+</mat-form-field>
+<button mat-raised-button (click)="updateUser(email.value,password.value,firstName.value,lastName.value)" class="primary-button">Update</button>

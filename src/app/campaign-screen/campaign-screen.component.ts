@@ -19,9 +19,11 @@ export class CampaignScreenComponent implements OnInit {
   videoToShow = {
     'Allowance': '../../assets/Allowance.mp4',
     'Finance Words': '../../assets/Finance words.mp4',
+    'Family Savings': '../../assets/Family Savings.mp4',
+    'Income and Outcome': '../../assets/Income and Outcome.mp4',
+    'Supermarket Shopping': '../../assets/Supermarket Shopping.mp4'
   }
   ngOnInit(): void {
-    console.log(this.data.saving)
     this.listener();
   }
   listener() {

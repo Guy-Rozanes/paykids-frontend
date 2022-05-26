@@ -146,5 +146,27 @@ export class LoginService {
   updateActionAsMarked(actionId: string) {
     return this.http.put(this.root + `actions/${actionId}`, { headers: this.headers })
   }
+  deleteTarget(targetId: string) {
+    return this.http.delete(this.root + `targets/${targetId}`, { headers: this.headers })
+  }
+  updateUser(userId: string, password: string, firstName: string, lastName: string) {
+    const body = {
+      password,
+      firstName,
+      lastName,
+    }
+    return this.http.put(this.root + `user/${userId}`, JSON.stringify(body), { headers: this.headers })
+  }
+
+  deleteUser(userId: string) {
+    return this.http.delete(this.root + `user/${userId}`, { headers: this.headers })
+  }
+
+
+  getFamilySavings(familyId: string) {
+    return this.http.get(this.root + `savings/family/${familyId}`, { headers: this.headers })
+  }
+
+  
 }
 

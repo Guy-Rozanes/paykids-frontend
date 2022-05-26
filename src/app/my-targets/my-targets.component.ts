@@ -1,5 +1,6 @@
 import { TagPlaceholder } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 
@@ -14,24 +15,25 @@ export class MyTargetsComponent implements OnInit {
   familyTargetsKids = [];
   family = [];
   private user: any = {};
-  constructor(private dataService: DataServiceService, private service: LoginService) { }
+  constructor(private dataService: DataServiceService, private service: LoginService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataService.currentUser.subscribe(user => {
       this.user = user
       if (this.user[2] == 'Owner') {
         this.getFamilyTarget();
+        this.getFamily();
       }
       else {
         this.getUserTarget();
       }
     });
-    this.getFamily();
+
   }
 
   getUserTarget() {
     this.service.getUserTarget(this.user[0]).subscribe(data => {
-      if (data['message'] != 'User doesnt have actions') {
+      if (data['message'] != 'User doesnt have targets') {
         this.targets = data['message']
       };
     })
@@ -39,23 +41,25 @@ export class MyTargetsComponent implements OnInit {
 
   addUserTarget(targetName, targetPrice) {
     this.service.addTarget(this.user[0], targetName, targetPrice).subscribe((data: any) => {
-      this.targets.push(
-        [
-          undefined,
-          this.user[0],
-          targetName,
-          targetPrice,
-        ]
-      )
+      if (data['message'] == 'Inserted successfully')
+        this.targets.push(
+          [
+            undefined,
+            this.user[0],
+            targetName,
+            targetPrice,
+          ]
+        )
+      else {
+        this._snackBar.open(data['message'])
+      }
     });
   }
 
   getFamilyTarget() {
     this.service.getFamilyTarget(this.user[1]).subscribe(data => {
       this.familyTargets = data;
-      console.log(this.familyTargets);
       this.familyTargetsKids = Object.keys(this.familyTargets)
-      console.log(this.familyTargetsKids);
     }
     );
   }
@@ -69,5 +73,17 @@ export class MyTargetsComponent implements OnInit {
         }
       }
     });
+  }
+
+  removeTargets(target) {
+    this.service.deleteTarget(target[0]).subscribe(data => {
+      if (data['message'] == 'Deleted') {
+        this.targets = this.targets.filter(item => {
+          if (item != target) {
+            return item
+          }
+        })
+      }
+    })
   }
 }

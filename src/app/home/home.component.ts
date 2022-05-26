@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   familyActions: any = {};
   familyTargets: any = {};
   familyAmount: any = {};
+  familySavings: any = {};
   myAmount = 0;
   myActions: any = []
   myTargets: any = []
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
         this.getAllFamilyActions();
         this.getAllFamilyTarget();
         this.getAllFamilyAmount();
+        this.getFamilySavings();
       } else {
         this.getMyAmount();
         this.getMyLastActions();
@@ -60,7 +62,14 @@ export class HomeComponent implements OnInit {
     })
   }
   getMyFamily() {
-    this.service.getAllFamily(this.user[1]).subscribe(response => this.family = response['message']);
+    this.service.getAllFamily(this.user[1]).subscribe(response => {
+      this.family = response['message']
+      this.family = this.family.filter(member => {
+        if (member[2] != 'Owner') {
+          return member;
+        }
+      })
+    });
   }
 
   getAllFamilyActions() {
@@ -74,7 +83,6 @@ export class HomeComponent implements OnInit {
           }
         })
       })
-      console.log(this.unseen_actions)
     });
   }
 
@@ -86,6 +94,12 @@ export class HomeComponent implements OnInit {
   getAllFamilyAmount() {
     this.service.getFamilyUsersAmount(this.user[1]).subscribe(data => {
       this.familyAmount = data;
+    });
+  }
+
+  getFamilySavings(){
+    this.service.getFamilySavings(this.user[1]).subscribe(data => {
+      this.familySavings = data['message'];
     });
   }
 
@@ -133,14 +147,12 @@ export class HomeComponent implements OnInit {
     return new Array(i);
   }
 
-  navigateToActions() {
-    this.router.navigate(['my-actions'])
+  navigateToActions(userId) {
+    console.log(userId)
+    this.router.navigate(['/my-actions', userId])
   }
 
-  navigateToTarget() {
-    this.router.navigate(['targets'])
+  navigateToTarget(userId) {
+    this.router.navigate(['targets'], userId)
   }
-
-
-
 }

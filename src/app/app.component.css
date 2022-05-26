@@ -19,10 +19,16 @@ nav a {
     left: 10px;
 }
 
-img {
+.rotate {
     transition: transform .7s ease-in-out;
 }
 
-img:hover {
+.rotate:hover {
     transform: rotate(360deg);
+}
+
+.contact {
+    position: fixed;
+    right: 0;
+    bottom: 0;
 }

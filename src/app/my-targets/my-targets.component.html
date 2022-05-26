@@ -2,10 +2,17 @@
 <div *ngIf="user[2]!='Owner'">
   <h4>targets</h4>
   <mat-list style="align-items: center;align-content: center;">
-    <mat-list-item *ngFor="let target of targets">
-      <div mat-line>{{target[2]}}</div>
-      <div mat-line> {{target[3]}} </div>
-    </mat-list-item>
+    <div>
+      <mat-list-item *ngFor="let target of targets">
+        <div mat-line>{{target[2]}}</div>
+        <div mat-line> {{target[3]}}</div>
+        <div mat-line style="cursor: pointer;" (click)="removeTargets(target)">
+          <mat-icon>delete</mat-icon>
+        </div>
+      </mat-list-item>
+
+    </div>
+
   </mat-list>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Target Name</mat-label>

@@ -23,7 +23,7 @@
   </div>
 </div>
 <div class="family-list" *ngIf="user[2]==='Owner'">
-  <mat-tab-group mat-align-tabs="center">
+  <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="selectedIndexNumber">
     <mat-tab *ngFor="let item of family" label="{{item}}">
       <div *ngIf="familyActionKids.includes(item); else no_actions">
         <mat-list style="align-items: center;align-content: center;">

@@ -1,0 +1,7 @@
+mat-list-item{
+    color: white;
+}
+
+.mat-list-item.active .contact-names{
+    color: red;
+  }

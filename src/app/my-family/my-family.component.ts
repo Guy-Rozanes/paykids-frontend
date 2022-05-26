@@ -4,6 +4,8 @@ import { BankLoadingComponent } from '../bank-loading/bank-loading.component';
 
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
+import { ModifyUserComponent } from '../modify-user/modify-user.component';
+import { PremiumWelcomeComponent } from '../premium-welcome/premium-welcome.component';
 
 interface Role {
   value: string;
@@ -33,14 +35,33 @@ export class MyFamilyComponent implements OnInit {
       this.user = user;
       this.accountType = this.user[7] == 'PREMIUM'
     });
+
     this.getFamily()
-    this.invokeStripe()
+    this.invokeStripe();
   }
 
   getFamily() {
     this.loginService.getAllFamily(this.user[1]).subscribe(data => {
       this.family = data['message'];
     });
+  }
+
+  modifyFamilyMember(person: any) {
+    this.dialog.open(ModifyUserComponent, {
+      data: {
+        person
+      }
+    })
+  }
+
+  removeUser(person: any) {
+    this.loginService.deleteUser(person[0]).subscribe(data => {
+      this.family = this.family.filter(item => {
+        if (item[0] != person[0]) {
+          return item;
+        }
+      })
+    })
   }
 
   addFamilyMember(email, password, firstName, lastName, paybox_id) {
@@ -68,26 +89,25 @@ export class MyFamilyComponent implements OnInit {
         })
       }, 10000)
     }, 2000);
-
-
   }
+
   initializePayment(amount: number) {
-    this.loginService.editFamilyAccountType(this.user[1], 'PREMIUM').subscribe((response: any) => {
-      if (response.message == 'ok') {
-        this.accountType = true;
-        this.user[7] = 'PREMIUM';
-        this.data.initUser(this.user);
-      }
-    })
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
       locale: 'auto',
-      token: function (stripeToken: any) { }
+      token: (stripeToken: any) => {
+        this.loginService.editFamilyAccountType(this.user[1], 'PREMIUM').subscribe((response: any) => {
+          this.accountType = true;
+          this.user[7] = 'PREMIUM';
+          this.data.initUser(this.user);
+        })
+        this.dialog.open(PremiumWelcomeComponent)
+      }
     });
     paymentHandler.open({
       name: 'PayKids Premium Account',
       description: 'Buying premium',
-      amount: amount * 100
+      amount: amount * 100,
     });
   }
   invokeStripe() {
@@ -121,4 +141,6 @@ export class MyFamilyComponent implements OnInit {
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+
 }

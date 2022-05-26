@@ -33,7 +33,13 @@ export class AppComponent implements OnInit {
   }
 
   goHomePage() {
-    this.router.navigate(['home'])
+    if(this.user){
+      this.router.navigate(['home'])
+    }
+    else{
+      this.router.navigate(['login'])
+    }
+    
   }
 
   goToMyFamily() {

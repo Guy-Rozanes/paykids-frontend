@@ -5,7 +5,7 @@
         <td>
           <h1>Welcome to PayKids</h1>
         </td>
-        <td><img src="../assets/bitcoin_foxy.png"
+        <td><img class="rotate" src="../assets/bitcoin_foxy.png"
             style="width: 14vh;height: 14vh;margin-bottom: -4vh;margin-left: -3vh;">
         </td>
       </tr>
@@ -22,10 +22,20 @@
     (click)="goToMyFamily()">My Family</button>
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn && user[2]==='Owner'"
     routerLink="/assign-savings">Assign Saving to Kids</button>
-  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-actions">My History
-    Actions</button>
-  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/targets">My Targets</button>
-  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">My Saving</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn"
+    routerLink="/my-actions/1">{{user[2]!='Owner' ? 'My History Actions' : 'Family History Actions'}}</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/targets">
+    {{user[2]!='Owner' ? 'My Targets' : 'Family Targets'}}</button>
+  <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">
+    {{user[2]!='Owner' ? 'My Saving' : 'Family Savings'}}
+  </button>
 </nav>
-
 <router-outlet></router-outlet>
+<div class="contact" style="display: flex;justify-content: end;margin-top: -34px;">
+  <h4 style="margin-right: 2vh;">Contact Us- </h4>
+  <a href="https://www.facebook.com/PayKids-102881392444443"><img style="width:30ox;height:30px;margin-top: 2vh;"
+      src="../assets/facebook-logo.PNG"></a>
+  <a href="mailto:support@paykids.com">
+    <mat-icon style="margin-top: 2vh;">email</mat-icon>
+  </a>
+</div>
