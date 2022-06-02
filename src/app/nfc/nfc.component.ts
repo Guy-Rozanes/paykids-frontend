@@ -1,4 +1,4 @@
-declare var require:any;
+declare var require: any;
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class NfcComponent implements OnInit {
 
   constructor() { }
-  private nfcImage = require("./assets/download.png");
+  showCompleted = false;
   ngOnInit() {
+    setTimeout(() => {
+      this.showCompleted=true;
+    }, 5000);
   }
 
 }

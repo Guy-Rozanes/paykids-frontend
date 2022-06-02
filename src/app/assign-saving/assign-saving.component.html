@@ -4,7 +4,8 @@
         <mat-form-field appearance="fill">
             <mat-label>Selected Video</mat-label>
             <mat-select [(value)]="selectedVideo">
-                <mat-option (click)="getVideo()" *ngFor="let video of videos" [value]="video" [disabled]="(video.value === 'video-3' || video.value === 'video-4') && user[7]!='PREMIUM' ">
+                <mat-option (click)="getVideo()" *ngFor="let video of videos" [value]="video"
+                    [disabled]="(video.value === 'video-3' || video.value === 'video-4') && user[7]!='PREMIUM' ">
                     {{video.viewValue}}
                 </mat-option>
             </mat-select>
@@ -21,6 +22,11 @@
     <span *ngIf="selectedKid && selectedVideo">
         {{selectedKid[0]}} will earn: {{selectedVideo.price}} ₪
         ({{selectedVideo.viewValue}})
+        <br />
+        Money will be in paybox id: {{selectedKid[5]}}
     </span>
-    <button class="primary-button" *ngIf="selectedKid && selectedVideo" (click)="addSavingExc()" mat-raised-button>Submit</button>
+</div>
+<div *ngIf="selectedKid && selectedVideo">
+    <button class="primary-button" mat-raised-button (click)="initializePayment()">Payment of {{selectedVideo.price}}
+        ₪</button>
 </div>

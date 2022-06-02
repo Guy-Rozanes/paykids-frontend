@@ -1,2 +1,9 @@
-<h2>Hold near to NFC Reader</h2>
-<img [src]="nfcImage">
+<h2>{{showCompleted ? 'Payment has been approved' : 'Hold near to NFC Reader' }}</h2>
+<img *ngIf="!showCompleted" src="../../assets/50472-nfc-animation.gif">
+<div style="display: flex;flex-direction: column;" *ngIf="showCompleted">
+    <img src="../../assets/paybox-pic.png">
+    <img *ngIf="!showSpinner" src="../../assets/37a533140916dc13.png" style="width:31vh">
+    <div *ngIf="showSpinner">
+    <mat-spinner ></mat-spinner>
+    </div>
+</div>

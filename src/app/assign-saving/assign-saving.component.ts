@@ -27,6 +27,7 @@ export class AssignSavingComponent implements OnInit {
     { value: 'video-4', viewValue: 'Supermarket Shopping', url: '../../assets/Supermarket Shopping.mp4', price: 55 },
   ];
 
+
   videoToShow = {
     'Allowance': '../../assets/Allowance.mp4',
     'Finance Words': '../../assets/Finance words.mp4',
@@ -36,11 +37,13 @@ export class AssignSavingComponent implements OnInit {
   }
   selectedVideo: Video = undefined;
   selectedKid = '';
+  paymentHandler: any = null;
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
     });
     this.getMyKids();
+    this.invokeStripe();
   }
 
 
@@ -58,5 +61,42 @@ export class AssignSavingComponent implements OnInit {
 
   getVideo() {
     console.log(this.videoToShow[this.selectedVideo.viewValue])
+  }
+
+  initializePayment(amount: number) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+      locale: 'auto',
+      token: (stripeToken: any) => {
+        this.addSavingExc();
+      }
+    });
+    paymentHandler.open({
+      name: 'Pay to your kid',
+      description: '',
+      amount: amount,
+    });
+  }
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement("script");
+      script.id = "stripe-script";
+      script.type = "text/javascript";
+      script.src = "https://checkout.stripe.com/checkout.js";
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+          locale: 'auto',
+          token: function (stripeToken: any) {
+            alert('Payment has been successfull!');
+          }
+        });
+      }
+      window.document.body.appendChild(script);
+      // this.loginService.saveCreditCard(
+      //   this.paymentHandler.stripToken.card.last4,
+      //   `${this.paymentHandler.stripeToken.card.exp_month}/${this.paymentHandler.stripeToken.card.exp_year}`
+      // )
+    }
   }
 }

@@ -7,14 +7,20 @@
     <mat-label>Password</mat-label>
     <input matInput placeholder="******" #password type="password">
 </mat-form-field>
-<br/>
+<br />
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>First Name</mat-label>
     <input matInput placeholder="Moshe" #firstName>
 </mat-form-field>
 <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>LastName</mat-label>
+    <mat-label>Last Name</mat-label>
     <input matInput placeholder="Cohen" #lastName>
 </mat-form-field>
-<br/>
-<button class="primary-button" mat-raised-button (click)="signUp(email.value,password.value,firstName.value,lastName.value)">Submit</button>
+<br />
+<button class="primary-button" mat-raised-button
+    (click)="signUp(email.value,password.value,firstName.value,lastName.value)">Submit</button>
+<p>
+    After sign up add your kids in "My Family" Section.<br />
+    Every kid should have a paybox group which created by yourself.<br />
+    Please Save your paybox username,passwords and groups ids.<br />
+</p>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 import { NfcComponent } from '../nfc/nfc.component';
+import { PayboxSyncComponent } from '../paybox-sync/paybox-sync.component';
 
 @Component({
   selector: 'app-my-actions',
@@ -20,12 +21,17 @@ export class MyActionsComponent implements OnInit {
   randomProducts = [
     { 'product_name': 'Gum', 'product_price': 2 },
     { 'product_name': 'Magnoom', 'product_price': 10 },
+    {},
     { 'product_name': 'Candy', 'product_price': 5 },
     { 'product_name': 'Supergoal', 'product_price': 15 },
+    {},
     { 'product_name': 'Fake Gun', 'product_price': 50 },
+    {},
     { 'product_name': 'Shoes', 'product_price': 200 },
+    {},
     { 'product_name': 'Coca Cola', 'product_price': 9 },
     { 'product_name': 'Sprite', 'product_price': 8 },
+    {},
     { 'product_name': 'Fuze Tea', 'product_price': 7 },
   ]
   private userCurrentAmount = 0;
@@ -72,7 +78,6 @@ export class MyActionsComponent implements OnInit {
 
   openNfcReader() {
     const dialogRef = this.dialog.open(NfcComponent, {
-
     });
     dialogRef.afterOpened().subscribe(_ => {
       setTimeout(() => {
@@ -84,7 +89,7 @@ export class MyActionsComponent implements OnInit {
           this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
           this.addAction(item.product_name, item.product_price.toLocaleString());
         })
-      }, 5000);
+      }, 11000);
     })
   }
 
@@ -114,6 +119,30 @@ export class MyActionsComponent implements OnInit {
       return 0;
     }
   }
-}
 
+  syncPaybox() {
+    const syncDialog = this.dialog.open(PayboxSyncComponent)
+    setTimeout(() => {
+      syncDialog.close();
+      const index = Math.floor(Math.random() * 12) + 1
+      const item = this.randomProducts[index]
+      if (item) {
+        console.log(item)
+        this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
+          this.userCurrentAmount = response['message'][0][2];
+          this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe(data => { })
+          const newAmount = this.userCurrentAmount - item.product_price;
+          if (this.userCurrentAmount < item) {
+            this._snackBar.open('User is synchornized');
+          }
+          this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
+          this.addAction(item.product_name, item.product_price.toLocaleString());
+        })
+      }
+      else {
+        this._snackBar.open('User is synchornized')
+      }
+    }, 5000)
+  }
+}
 

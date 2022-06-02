@@ -9,10 +9,11 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import {
   MatAutocompleteModule, MatButtonModule, MatCheckboxModule, MatDatepickerModule,
   MatFormFieldModule, MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
-  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule, MatProgressSpinnerModule, MatBadgeModule,MatTabsModule,
+  MatSlideToggleModule, MatSnackBar, MatCardModule, MAT_DIALOG_DATA, MatDialogRef, MatExpansionModule, MatProgressSpinnerModule, MatBadgeModule, MatTabsModule,
+  MatStepperModule,
 } from '@angular/material';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
-import {OverlayModule} from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { LoginService } from './login.service';
 import { DataServiceService } from './data-service.service';
 import { HomeComponent } from './home/home.component';
@@ -29,8 +30,10 @@ import { CampaignScreenComponent } from './campaign-screen/campaign-screen.compo
 import { NotifcationComponent } from './notifcation/notifcation.component';
 import { BankLoadingComponent } from './bank-loading/bank-loading.component';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PremiumWelcomeComponent } from './premium-welcome/premium-welcome.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { PayboxSyncComponent } from './paybox-sync/paybox-sync.component';
 
 
 
@@ -51,8 +54,10 @@ import { PremiumWelcomeComponent } from './premium-welcome/premium-welcome.compo
     BankLoadingComponent,
     ModifyUserComponent,
     PremiumWelcomeComponent,
+    AddUserComponent,
+    PayboxSyncComponent,
   ],
-  entryComponents: [NfcComponent, CampaignScreenComponent,NotifcationComponent,BankLoadingComponent,ModifyUserComponent,PremiumWelcomeComponent],
+  entryComponents: [NfcComponent, CampaignScreenComponent, NotifcationComponent, BankLoadingComponent, ModifyUserComponent, PremiumWelcomeComponent, AddUserComponent,PayboxSyncComponent],
   imports: [
     MatListModule,
     HttpClientModule,
@@ -78,6 +83,7 @@ import { PremiumWelcomeComponent } from './premium-welcome/premium-welcome.compo
     MatBadgeModule,
     OverlayModule,
     MatTabsModule,
+    MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
   ],

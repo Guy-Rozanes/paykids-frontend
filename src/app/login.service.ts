@@ -167,6 +167,15 @@ export class LoginService {
     return this.http.get(this.root + `savings/family/${familyId}`, { headers: this.headers })
   }
 
+  syncWithPaybox(userId,password,payboxId){
+    const body={
+      'username':userId,
+      'password':password,
+      'payBoxId':payboxId,
+    }
+    return this.http.post(this.root + `/actions/sync`, { headers: this.headers })
+  }
+
   
 }
 

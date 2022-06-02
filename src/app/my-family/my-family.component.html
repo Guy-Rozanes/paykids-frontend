@@ -1,56 +1,23 @@
 <h1>My Family</h1>
+
 <div class="main-card">
-  <mat-card  *ngFor="let person of family; let index=index; let odd=odd; let even=even;"
-    class="example-card">
+  <mat-card *ngFor="let person of family; let index=index; let odd=odd; let even=even;" class="example-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Name: {{person[3]}} {{person[4]}}</mat-card-title>
       <mat-card-subtitle>Bank Account: {{ person[6] }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-button (click)="removeUser(person)"><mat-icon class="white-icon">delete</mat-icon></button>
-      <button mat-button (click)="modifyFamilyMember(person)"><mat-icon class="white-icon">edit</mat-icon></button>
+      <button mat-button (click)="removeUser(person)">
+        <mat-icon class="white-icon">delete</mat-icon>
+      </button>
+      <button mat-button (click)="modifyFamilyMember(person)">
+        <mat-icon class="white-icon">edit</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
-
-<br />
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Email</mat-label>
-  <input matInput placeholder="dana@gmail.com" #email>
-  <br />
-</mat-form-field>
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Password</mat-label>
-  <input matInput placeholder="******" #password type="password">
-</mat-form-field>
-<br />
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>First Name</mat-label>
-  <input matInput placeholder="Moshe" #firstName>
-</mat-form-field>
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>LastName</mat-label>
-  <input matInput placeholder="Cohen" #lastName>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Role</mat-label>
-  <mat-select [(value)]="selectedRole">
-    <mat-option></mat-option>
-    <mat-option [value]="option.value" *ngFor="let option of roles">{{ option.viewValue }}</mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Bank Account Number</mat-label>
-  <input matInput placeholder="800-0000099999999" #payBoxId>
-</mat-form-field>
-<br />
-<button class="primary-button" mat-raised-button
-  (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,payBoxId.value)">
-  Add Family Member</button>
-<div *ngIf="showSpinner">
-
-</div>
+<button class="primary-button" mat-raised-button (click)="openAddUserStepper()">Add User</button>
 <div *ngIf="!accountType">
   <h2>Go Premium</h2>
   <div>

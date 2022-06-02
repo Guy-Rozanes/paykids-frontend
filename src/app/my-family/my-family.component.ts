@@ -1,5 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { AddUserComponent } from '../add-user/add-user.component';
 import { BankLoadingComponent } from '../bank-loading/bank-loading.component';
 
 import { DataServiceService } from '../data-service.service';
@@ -136,6 +137,20 @@ export class MyFamilyComponent implements OnInit {
   addAccountAmount(email: string, bankNumber: string) {
     let amount = Math.floor(Math.random() * 500) + 500;
     this.loginService.addUserAmount(email, bankNumber, amount).subscribe(data => { });
+  }
+
+  openAddUserStepper() {
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      data: {
+        family: this.user[1],
+      },
+    })
+    dialogRef.afterClosed().subscribe((data: any) => {
+      const user = data.user
+      this.family.push(
+        user
+      )
+    })
   }
 
   delay(ms: number) {
