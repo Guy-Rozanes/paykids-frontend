@@ -52,7 +52,6 @@ export class AppComponent implements OnInit {
 
   getAllFamilyActions() {
     this.service.getAllFamilyActions(this.user[1]).subscribe(data => {
-      console.log(data)
       this.familyActions = data;
       for (let item of Object.entries(this.familyActions)) {
         for (let action of item) {
@@ -61,7 +60,6 @@ export class AppComponent implements OnInit {
           }
         }
       }
-      console.log(this.unseen_actions)
     });
   }
 

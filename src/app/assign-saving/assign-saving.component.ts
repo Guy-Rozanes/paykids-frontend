@@ -39,11 +39,11 @@ export class AssignSavingComponent implements OnInit {
   selectedKid = '';
   paymentHandler: any = null;
   ngOnInit() {
+    this.invokeStripe();
     this.data.currentUser.subscribe(user => {
       this.user = user;
     });
     this.getMyKids();
-    this.invokeStripe();
   }
 
 
@@ -60,7 +60,6 @@ export class AssignSavingComponent implements OnInit {
   }
 
   getVideo() {
-    console.log(this.videoToShow[this.selectedVideo.viewValue])
   }
 
   initializePayment(amount: number) {

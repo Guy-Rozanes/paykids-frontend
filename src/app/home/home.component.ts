@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(data => {
       this.unseen_actions.forEach(action => {
-        console.log(action)
         this.service.updateActionAsMarked(action.action_id).subscribe(data => {
         })
       })
@@ -74,7 +73,6 @@ export class HomeComponent implements OnInit {
 
   getAllFamilyActions() {
     this.service.getAllFamilyActions(this.user[1]).subscribe(data => {
-      console.log(data)
       this.familyActions = data;
       Object.entries(this.familyActions).forEach((item: any) => {
         item[1].forEach((action: any) => {
@@ -107,7 +105,6 @@ export class HomeComponent implements OnInit {
     this.service.getUserAmount(this.user[0]).subscribe(
       data => {
         this.myAmount = data['message'][0][2]
-        console.log(this.myAmount)
       }
     )
   }
@@ -125,7 +122,6 @@ export class HomeComponent implements OnInit {
       data => {
         if (data['message'] != 'User doesnt have targets') {
           this.myTargets = data['message']
-          console.log(this.myTargets)
         }
       }
     )
@@ -139,7 +135,6 @@ export class HomeComponent implements OnInit {
             return item;
           }
         })
-        console.log(this.mySavings)
       }
     )
   }
@@ -148,7 +143,6 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToActions(userId) {
-    console.log(userId)
     this.router.navigate(['/my-actions', userId])
   }
 

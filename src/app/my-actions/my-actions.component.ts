@@ -54,7 +54,6 @@ export class MyActionsComponent implements OnInit {
   addAction(productName: string, price: string) {
     this.service.addAction(this.user[0], productName, price).subscribe(response => {
       if (response['message'] === 'Inserted successfully') {
-        console.log('aaa')
         this.actions.push(
           [
             undefined,
@@ -108,7 +107,6 @@ export class MyActionsComponent implements OnInit {
   selectedIndex() {
     const userId = this.router.snapshot.paramMap.get('userId')
     if (userId) {
-      console.log(userId)
       for (let i = 0; i < this.family.length; i++) {
         if (this.family[i][0] == userId) {
           return i;
@@ -127,16 +125,17 @@ export class MyActionsComponent implements OnInit {
       const index = Math.floor(Math.random() * 12) + 1
       const item = this.randomProducts[index]
       if (item) {
-        console.log(item)
         this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
           this.userCurrentAmount = response['message'][0][2];
-          this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe(data => { })
-          const newAmount = this.userCurrentAmount - item.product_price;
-          if (this.userCurrentAmount < item) {
+          if (this.userCurrentAmount < item.product_price) {
             this._snackBar.open('User is synchornized');
           }
-          this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
-          this.addAction(item.product_name, item.product_price.toLocaleString());
+          else {
+            this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe(data => { })
+            const newAmount = this.userCurrentAmount - item.product_price;
+            this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
+            this.addAction(item.product_name, item.product_price.toLocaleString());
+          }
         })
       }
       else {

@@ -24,12 +24,14 @@
         <mat-option [value]="option.value" *ngFor="let option of roles">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button matStepperNext>Next</button>
+    <button mat-button
+      [disabled]="!email.value.includes('@') || password.value==='' || firstName.value==='' || lastName.value===''"
+      matStepperNext>Next</button>
   </mat-step>
   <mat-step>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Paybox Username</mat-label>
-      <input matInput placeholder="gmail@gmail.com">
+      <input matInput placeholder="gmail@gmail.com" #userName>
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Paybox Password</mat-label>
@@ -39,11 +41,8 @@
       <mat-label>Paybox Group ID</mat-label>
       <input matInput placeholder="Moshe" type="password" #payboxId>
     </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Account Code</mat-label>
-      <input matInput placeholder="Moshe" type="password" #accountCode>
-    </mat-form-field>
     <button mat-button matStepperNext
+      [disabled]="!userName.value.includes('@') || userPass.value==='' || payboxId.value===''"
       (click)="addFamilyMember(email.value,password.value,firstName.value,lastName.value,payboxId.value)">Connect</button>
   </mat-step>
   <mat-step>

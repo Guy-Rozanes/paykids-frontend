@@ -8,7 +8,7 @@ import { LoginService } from "../login.service";
   styleUrls: ["./campaign-screen.component.css"]
 })
 export class CampaignScreenComponent implements OnInit {
-  skipped = [];
+  skipped = false;
   constructor(private dialogRef: MatDialogRef<CampaignScreenComponent>,
     private _snackBar: MatSnackBar,
     private service: LoginService,
@@ -31,8 +31,7 @@ export class CampaignScreenComponent implements OnInit {
 
     const onTimeUpdate = event => {
       if (checkSkipped(event.target.currentTime)) {
-        this.skipped.push('skipped');
-        console.log(this.skipped);
+        this.skipped = true;
       }
     }
 
@@ -57,23 +56,27 @@ export class CampaignScreenComponent implements OnInit {
       return false;
     }
 
-    $video.addEventListener("play", e => console.log('play'));
-    $video.addEventListener("playing", e => console.log('playing'));
+    $video.addEventListener("play", e => {});
+    $video.addEventListener("playing", e => {});
 
     $video.addEventListener("timeupdate", onTimeUpdate);
 
     $video.addEventListener("ended", e => {
-      console.log(this.data.amount);
-      console.log(this.data);
-      this.service.updateSavingStatus(this.data.saving[1]).subscribe(data =>
-        this._snackBar.open(data['message'], undefined, {
-          panelClass: ['snackBar'],
-        }
-        )
-      );
-      const newAmount = this.data.amount + parseInt(this.data.saving[3])
-      this.service.updateUserAmount(this.data.user[0], newAmount).subscribe(data => console.log(data));
-    });
-    $video.addEventListener("pause", e => console.log('pause'));
+      if (this.skipped) {
+        this.service.updateSavingStatus(this.data.saving[1]).subscribe(data =>
+          this._snackBar.open(data['message'], undefined, {
+            panelClass: ['snackBar'],
+          }
+          )
+        );
+        const newAmount = this.data.amount + parseInt(this.data.saving[3])
+        this.service.updateUserAmount(this.data.user[0], newAmount).subscribe(data => {});
+      }
+      else{
+        this._snackBar.open('Do not skip this video!!')
+      }
+    }
+    );
+    $video.addEventListener("pause", e => {});
   }
 }

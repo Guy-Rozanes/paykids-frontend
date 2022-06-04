@@ -13,7 +13,6 @@ export class ModifyUserComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: LoginService, private _snackBar: MatSnackBar) { }
   inputFormControl = new FormControl({ value: null, disabled: true });
   ngOnInit() {
-    console.log(this.data)
   }
 
   updateUser(userId: string, password: string, firstName: string, lastName: string) {

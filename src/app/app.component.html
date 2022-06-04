@@ -21,13 +21,13 @@
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn && user[2]==='Owner'"
     (click)="goToMyFamily()">My Family</button>
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn && user[2]==='Owner'"
-    routerLink="/assign-savings">Assign Saving to Kids</button>
+    routerLink="/assign-savings">Assign Campaigns to Kids</button>
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn"
     routerLink="/my-actions/1">{{user[2]!='Owner' ? 'My History Actions' : 'Family History Actions'}}</button>
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/targets">
     {{user[2]!='Owner' ? 'My Targets' : 'Family Targets'}}</button>
   <button class="primary-button main-nav" mat-raised-button *ngIf="loggedIn" routerLink="/my-savings">
-    {{user[2]!='Owner' ? 'My Saving' : 'Family Savings'}}
+    {{user[2]!='Owner' ? 'My Campaigns' : 'Family Campaigns'}}
   </button>
 </nav>
 <router-outlet></router-outlet>

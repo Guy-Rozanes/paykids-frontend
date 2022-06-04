@@ -12,7 +12,7 @@ export class PremiumWelcomeComponent implements OnInit {
   features = [
     'New Parent Dashboard',
     'More educative videos',
-    'An Amazing NFC Reader',
+    'Sync your payment from paybox',
   ]
   ngOnInit() {
   }

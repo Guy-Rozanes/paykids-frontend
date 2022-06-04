@@ -32,7 +32,6 @@ export class MySavingsComponent implements OnInit {
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
-      console.log(this.user)
     });
     this.mySavings();
     this.getUserAmount();
@@ -62,7 +61,6 @@ export class MySavingsComponent implements OnInit {
           this.family.push(item[0])
         }
       }
-      console.log(this.family)
     });
   }
 
@@ -70,7 +68,6 @@ export class MySavingsComponent implements OnInit {
     this.service.getFamilySavings(this.user[1]).subscribe(data => {
       this.familySaving = data['message'];
       this.savingKids = Object.keys(this.familySaving);
-      console.log(this.familySaving)
     });
   }
 

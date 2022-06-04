@@ -20,7 +20,8 @@
     <br />
     <button class="primary-button" mat-raised-button (click)="addAction(productName.value,price.value)">Submit</button>
     <button class="primary-button" mat-raised-button (click)="openNfcReader()">Pay with NFC</button>
-    <button class="primary-button" mat-raised-button (click)="syncPaybox()">Sync your last bills</button>
+    <button class="primary-button" mat-raised-button [disabled]="user[7]!='PREMIUM'" (click)="syncPaybox()">Sync your
+      last bills</button>
   </div>
 </div>
 <div class="family-list" *ngIf="user[2]==='Owner'">
