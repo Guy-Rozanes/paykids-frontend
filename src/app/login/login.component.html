@@ -1,11 +1,11 @@
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Email</mat-label>
     <input matInput placeholder="dana@gmail.com" #email>
-    <br />
 </mat-form-field>
+<br />
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Password</mat-label>
     <input matInput placeholder="******" #password type="password">
 </mat-form-field>
-<br/>
+<br />
 <button class="primary-button" mat-raised-button (click)="login(email.value,password.value)">Submit</button>

@@ -41,7 +41,7 @@ export class AddUserComponent implements OnInit {
             user:
               [
                 email,
-                this.data.user[1],
+                this.data.family,
                 this.selectedRole,
                 firstName,
                 lastName,

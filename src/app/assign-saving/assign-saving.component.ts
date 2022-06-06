@@ -37,6 +37,7 @@ export class AssignSavingComponent implements OnInit {
   }
   selectedVideo: Video = undefined;
   selectedKid = '';
+  selectedKidAllowance = '';
   paymentHandler: any = null;
   ngOnInit() {
     this.invokeStripe();
@@ -76,6 +77,31 @@ export class AssignSavingComponent implements OnInit {
       amount: amount,
     });
   }
+  initializePaymentAllownce(kid, amount) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+      locale: 'auto',
+      token: (stripeToken: any) => {
+        if (!amount.isDecimal()){
+          this._snackBar.open('Insert valid number')
+        }
+        else{
+          this.service.getUserAmount(kid[0]).subscribe(data => {
+            const kidsAmount = parseInt(data['message'][0][2]);
+            const newAmount = parseInt(amount) + kidsAmount;
+            this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
+              this._snackBar.open('Paid Succesfully')
+            })
+          })
+        }
+      }
+    });
+    paymentHandler.open({
+      name: 'Pay to your kid',
+      description: '',
+      amount: '',
+    });
+  }
   invokeStripe() {
     if (!window.document.getElementById('stripe-script')) {
       const script = window.document.createElement("script");
@@ -92,10 +118,6 @@ export class AssignSavingComponent implements OnInit {
         });
       }
       window.document.body.appendChild(script);
-      // this.loginService.saveCreditCard(
-      //   this.paymentHandler.stripToken.card.last4,
-      //   `${this.paymentHandler.stripeToken.card.exp_month}/${this.paymentHandler.stripeToken.card.exp_year}`
-      // )
     }
   }
 }

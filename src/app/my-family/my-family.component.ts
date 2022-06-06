@@ -68,7 +68,6 @@ export class MyFamilyComponent implements OnInit {
   addFamilyMember(email, password, firstName, lastName, paybox_id) {
     let response = '';
     this.showSpinner = true;
-    this.delay(20000000000);
     setTimeout(() => {
       const dialogRef = this.dialog.open(BankLoadingComponent)
       setTimeout(() => {
@@ -127,10 +126,6 @@ export class MyFamilyComponent implements OnInit {
         });
       }
       window.document.body.appendChild(script);
-      // this.loginService.saveCreditCard(
-      //   this.paymentHandler.stripToken.card.last4,
-      //   `${this.paymentHandler.stripeToken.card.exp_month}/${this.paymentHandler.stripeToken.card.exp_year}`
-      // )
     }
   }
 
@@ -147,14 +142,11 @@ export class MyFamilyComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((data: any) => {
       const user = data.user
+      console.log(user)
       this.family.push(
         user
       )
     })
-  }
-
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 
