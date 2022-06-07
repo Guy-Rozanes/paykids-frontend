@@ -28,8 +28,8 @@
                         <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]!=undefiend"
                             style="cursor: pointer;">
                             <div *ngFor="let item of familyActions[person[0]].slice(0,4)">
-                                    {{item.action_name}}
-                                    {{item.action_price}} ₪
+                                {{item.action_name}}
+                                {{item.action_price}} ₪
                             </div>
                         </div>
                         <div *ngIf="!familyActions[person[0]]">
@@ -42,7 +42,7 @@
                         <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]!=undefiend"
                             style="cursor: pointer;">
                             <div *ngFor="let item of familyTargets[person[0]].slice(0,4)">
-                                    {{item.target_name}} {{item.target_price}} ₪
+                                {{item.target_name}} {{item.target_price}} ₪
                             </div>
                         </div>
                         <div *ngIf="!familyTargets[person[0]]">
@@ -79,12 +79,12 @@
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title>Last Actions</mat-card-title>
                     <mat-card-subtitle>
-                        <div *ngIf="myActions!=[]">
+                        <div *ngIf="myActions.length!=0">
                             <div *ngFor="let action of myActions.slice(0,4)">
                                 {{action[2]}} {{action[3]}} ₪
                             </div>
                         </div>
-                        <div *ngIf="myActions==[]">
+                        <div *ngIf="myActions.length==0">
                             Start inserting your last actions ...
                         </div>
                     </mat-card-subtitle>
@@ -95,7 +95,7 @@
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title>Your Targets</mat-card-title>
                     <mat-card-subtitle>
-                        <div *ngIf="myTargets;else empty_targets">
+                        <div *ngIf="myTargets.length!=0;else empty_targets">
                             <div *ngFor="let target of myTargets.slice(0,4)">
                                 {{target[2]}} {{target[3]}} ₪
                             </div>
@@ -111,7 +111,7 @@
                     <div mat-card-avatar class="example-header-image"></div>
                     <mat-card-title>Your Campaigns</mat-card-title>
                     <mat-card-subtitle>
-                        <div *ngIf="mySavings;else empty_saving">
+                        <div *ngIf="mySavings.length!=0;else empty_saving">
                             <div *ngFor="let saving of mySavings.slice(0,4)">
                                 {{saving[2]}} {{saving[3]}} ₪
                             </div>

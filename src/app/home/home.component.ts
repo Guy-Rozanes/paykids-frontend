@@ -135,7 +135,9 @@ export class HomeComponent implements OnInit {
   getMyLastActions() {
     this.service.getAllUserActions(this.user[0]).subscribe(
       data => {
-        this.myActions = data['message']
+        if (data['message'] != 'User doesnt have actions'){
+          this.myActions = data['message']
+        }
       }
     )
   }
@@ -146,6 +148,7 @@ export class HomeComponent implements OnInit {
         if (data['message'] != 'User doesnt have targets') {
           this.myTargets = data['message']
         }
+        console.log(this.myTargets)
       }
     )
   }
