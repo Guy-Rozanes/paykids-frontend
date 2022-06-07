@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.loggedIn = false;
+    localStorage.removeItem('user');
+    localStorage.removeItem('pass');
     this.data.changeLoggedInStatus(false);
     this.data.initUser(null);
     this.getMyFamily();

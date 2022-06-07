@@ -26,22 +26,45 @@ export class HomeComponent implements OnInit {
   arr1 = [1, 2, 3, 4, 5];
   unseen_actions: any = [];
   overlayOpen = false;
-  constructor(private data: DataServiceService, private service: LoginService, private router: Router, public dialog: MatDialog) { }
+  constructor(private data: DataServiceService, private service: LoginService, private router: Router, public dialog: MatDialog) {
+
+  }
 
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user
-      if (this.user[2] == 'Owner') {
-        this.getMyFamily();
-        this.getAllFamilyActions();
-        this.getAllFamilyTarget();
-        this.getAllFamilyAmount();
-        this.getFamilySavings();
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.service.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.data.initUser(data['user']);
+          this.user = data['user'];
+          this.data.changeLoggedInStatus(true)
+          if (this.user[2] == 'Owner') {
+            this.getMyFamily();
+            this.getAllFamilyActions();
+            this.getAllFamilyTarget();
+            this.getAllFamilyAmount();
+            this.getFamilySavings();
+          } else {
+            this.getMyAmount();
+            this.getMyLastActions();
+            this.getMyTargets();
+            this.getMySaving();
+          }
+        }
+        )
       } else {
-        this.getMyAmount();
-        this.getMyLastActions();
-        this.getMyTargets();
-        this.getMySaving();
+        if (this.user[2] == 'Owner') {
+          this.getMyFamily();
+          this.getAllFamilyActions();
+          this.getAllFamilyTarget();
+          this.getAllFamilyAmount();
+          this.getFamilySavings();
+        } else {
+          this.getMyAmount();
+          this.getMyLastActions();
+          this.getMyTargets();
+          this.getMySaving();
+        }
       }
     });
 
@@ -95,7 +118,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getFamilySavings(){
+  getFamilySavings() {
     this.service.getFamilySavings(this.user[1]).subscribe(data => {
       this.familySavings = data['message'];
     });
@@ -142,11 +165,11 @@ export class HomeComponent implements OnInit {
     return new Array(i);
   }
 
-  navigateToActions(userId) {
-    this.router.navigate(['/my-actions', userId])
+  navigateToActions() {
+    this.router.navigate(['my-actions'])
   }
 
-  navigateToTarget(userId) {
-    this.router.navigate(['targets'], userId)
+  navigateToTarget() {
+    this.router.navigate(['targets'])
   }
 }

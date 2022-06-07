@@ -34,10 +34,18 @@ export class MyFamilyComponent implements OnInit {
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
-      this.accountType = this.user[7] == 'PREMIUM'
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.loginService.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.data.initUser(data['user']);
+          this.user = data['user'];
+          this.data.changeLoggedInStatus(true)
+          this.getFamily();
+          this.accountType = this.user[7] == 'PREMIUM'
+        })
+      }else{
+        this.getFamily();
+      }
     });
-
-    this.getFamily()
     this.invokeStripe();
   }
 

@@ -32,11 +32,23 @@ export class MySavingsComponent implements OnInit {
   ngOnInit() {
     this.data.currentUser.subscribe(user => {
       this.user = user;
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.service.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.data.initUser(data['user']);
+          this.user = data['user'];
+          this.data.changeLoggedInStatus(true)
+          this.mySavings();
+          this.getUserAmount();
+          this.getFamily();
+          this.getAllFamilySavings();
+        })
+      } else {
+        this.mySavings();
+        this.getUserAmount();
+        this.getFamily();
+        this.getAllFamilySavings();
+      }
     });
-    this.mySavings();
-    this.getUserAmount();
-    this.getFamily();
-    this.getAllFamilySavings();
   }
 
   mySavings() {

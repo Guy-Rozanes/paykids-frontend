@@ -41,14 +41,20 @@ export class MyActionsComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentUser.subscribe(user => {
       this.user = user
-    });
-    this.service.getAllUserActions(this.user[0]).subscribe(actions => {
-      if (actions['message'] != 'User doesnt have actions') {
-        this.actions = actions['message'];
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.service.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.dataService.initUser(data['user']);
+          this.user = data['user'];
+          this.dataService.changeLoggedInStatus(true)
+          this.getAllFamilyActions()
+          this.getFamily();
+        })
+      } else {
+        this.getAllFamilyActions()
+        this.getFamily();
       }
-    });
-    this.getAllFamilyActions()
-    this.getFamily();
+
+    })
   }
 
   addAction(productName: string, price: string) {

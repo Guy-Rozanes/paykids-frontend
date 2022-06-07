@@ -20,12 +20,27 @@ export class MyTargetsComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentUser.subscribe(user => {
       this.user = user
-      if (this.user[2] == 'Owner') {
-        this.getFamilyTarget();
-        this.getFamily();
-      }
-      else {
-        this.getUserTarget();
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.service.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.dataService.initUser(data['user']);
+          this.user = data['user'];
+          this.dataService.changeLoggedInStatus(true)
+          if (this.user[2] == 'Owner') {
+            this.getFamilyTarget();
+            this.getFamily();
+          }
+          else {
+            this.getUserTarget();
+          }
+        })
+      }else{
+        if (this.user[2] == 'Owner') {
+          this.getFamilyTarget();
+          this.getFamily();
+        }
+        else {
+          this.getUserTarget();
+        }
       }
     });
 

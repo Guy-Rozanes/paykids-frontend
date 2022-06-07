@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit {
         this.dataService.changeLoggedInStatus(true);
         this.dataService.initUser(response['user']);
         this.router.navigate(['home'])
+        console.log(this.user[7])
+        localStorage.setItem('user',response['user'][0])
+        localStorage.setItem('pass',response['user'][6])
         if (response['user'][7] == 'FREE') {
           this._snackBar.open('Buy Premium Accout for more features', undefined, {
             panelClass: ['snackBar'],

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
   { path: 'my-family', component: MyFamilyComponent },
-  { path: 'my-actions/:userId', component: MyActionsComponent },
+  { path: 'my-actions', component: MyActionsComponent },
   { path: 'targets', component: MyTargetsComponent },
   { path: 'assign-savings', component: AssignSavingComponent },
   { path: 'my-savings', component: MySavingsComponent },

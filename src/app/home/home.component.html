@@ -25,7 +25,7 @@
                         <h3>
                             Actions
                         </h3>
-                        <div (click)="navigateToActions(person[0])" *ngIf="familyActions[person[0]]!=undefiend"
+                        <div (click)="navigateToActions()" *ngIf="familyActions[person[0]]!=undefiend"
                             style="cursor: pointer;">
                             <div *ngFor="let item of familyActions[person[0]].slice(0,4)">
                                     {{item.action_name}}
@@ -39,7 +39,7 @@
                     </div>
                     <div class="card">
                         <h3>Targets</h3>
-                        <div (click)="navigateToTarget(person[0])" *ngIf="familyTargets[person[0]]!=undefiend"
+                        <div (click)="navigateToTarget()" *ngIf="familyTargets[person[0]]!=undefiend"
                             style="cursor: pointer;">
                             <div *ngFor="let item of familyTargets[person[0]].slice(0,4)">
                                     {{item.target_name}} {{item.target_price}} ₪
