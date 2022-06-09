@@ -13,7 +13,7 @@ import * as internal from 'assert';
 export class LoginService {
   headers = { 'content-type': 'application/json' }
 
-  root: string = 'http://10.10.248.150:5000/'
+  root: string = 'http://127.0.0.1:5000/'
   constructor(private http: HttpClient) {
 
   }

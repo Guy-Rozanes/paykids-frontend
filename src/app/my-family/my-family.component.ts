@@ -44,6 +44,7 @@ export class MyFamilyComponent implements OnInit {
         })
       }else{
         this.getFamily();
+        this.accountType = this.user[7] == 'PREMIUM'
       }
     });
     this.invokeStripe();
