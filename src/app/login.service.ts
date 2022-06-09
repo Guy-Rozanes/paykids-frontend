@@ -12,8 +12,11 @@ import * as internal from 'assert';
 })
 export class LoginService {
   headers = { 'content-type': 'application/json' }
-  root: string = 'http://localhost:5000/'
-  constructor(private http: HttpClient) { }
+
+  root: string = 'http://10.10.248.150:5000/'
+  constructor(private http: HttpClient) {
+
+  }
 
   login(email: string, password: string): Observable<any> {
     let body = {
@@ -167,15 +170,15 @@ export class LoginService {
     return this.http.get(this.root + `savings/family/${familyId}`, { headers: this.headers })
   }
 
-  syncWithPaybox(userId,password,payboxId){
-    const body={
-      'username':userId,
-      'password':password,
-      'payBoxId':payboxId,
+  syncWithPaybox(userId, password, payboxId) {
+    const body = {
+      'username': userId,
+      'password': password,
+      'payBoxId': payboxId,
     }
     return this.http.post(this.root + `/actions/sync`, { headers: this.headers })
   }
 
-  
+
 }
 
