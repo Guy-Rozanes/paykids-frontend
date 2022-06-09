@@ -82,18 +82,14 @@ export class AssignSavingComponent implements OnInit {
       key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
       locale: 'auto',
       token: (stripeToken: any) => {
-        if (!amount.isDecimal()){
-          this._snackBar.open('Insert valid number')
-        }
-        else{
-          this.service.getUserAmount(kid[0]).subscribe(data => {
-            const kidsAmount = parseInt(data['message'][0][2]);
-            const newAmount = parseInt(amount) + kidsAmount;
-            this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
-              this._snackBar.open('Paid Succesfully')
-            })
+        this.service.getUserAmount(kid[0]).subscribe(data => {
+          const kidsAmount = parseInt(data['message'][0][2]);
+          console.log(kidsAmount)
+          const newAmount = parseInt(amount) + kidsAmount;
+          this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
+            this._snackBar.open('Paid Succesfully')
           })
-        }
+        })
       }
     });
     paymentHandler.open({
