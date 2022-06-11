@@ -114,7 +114,7 @@ export class MyActionsComponent implements OnInit {
   getMyLastActions() {
     this.service.getAllUserActions(this.user[0]).subscribe(
       data => {
-        if (data['message'] != 'User doesnt have actions'){
+        if (data['message'] != 'User doesnt have actions') {
           this.actions = data['message']
         }
       }
@@ -141,7 +141,7 @@ export class MyActionsComponent implements OnInit {
       syncDialog.close();
       const index = Math.floor(Math.random() * 12) + 1
       const item = this.randomProducts[index]
-      if (item) {
+      if (item != {}) {
         this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
           this.userCurrentAmount = response['message'][0][2];
           if (this.userCurrentAmount < item.product_price) {
