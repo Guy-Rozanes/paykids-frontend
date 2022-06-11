@@ -42,9 +42,18 @@ export class AssignSavingComponent implements OnInit {
   ngOnInit() {
     this.invokeStripe();
     this.data.currentUser.subscribe(user => {
-      this.user = user;
+      this.user = user
+      if ((!this.user) && localStorage.getItem('user')) {
+        this.service.login(localStorage.getItem('user'), localStorage.getItem('pass')).subscribe(data => {
+          this.data.initUser(data['user']);
+          this.user = data['user'];
+          this.data.changeLoggedInStatus(true)
+          this.getMyKids();
+        })
+      } else {
+        this.getMyKids();
+      }
     });
-    this.getMyKids();
   }
 
 
@@ -78,10 +87,10 @@ export class AssignSavingComponent implements OnInit {
     });
   }
   initializePaymentAllownce(kid, amount) {
-    if (parseInt(amount) < 0 || parseInt(amount) < 500) {
-      this._snackBar.open('Allowance limitation is 0 to 500')
+    if (parseInt(amount) < 0 || parseInt(amount) < 1000) {
+      this._snackBar.open('Allowance limitation is 0 to 1000')
     }
-    else{
+    else {
       const paymentHandler = (<any>window).StripeCheckout.configure({
         key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
         locale: 'auto',
@@ -102,6 +111,7 @@ export class AssignSavingComponent implements OnInit {
       });
     }
   }
+
   invokeStripe() {
     if (!window.document.getElementById('stripe-script')) {
       const script = window.document.createElement("script");
