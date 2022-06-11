@@ -83,12 +83,15 @@ export class AssignSavingComponent implements OnInit {
       locale: 'auto',
       token: (stripeToken: any) => {
         this.service.getUserAmount(kid[0]).subscribe(data => {
-          const kidsAmount = parseInt(data['message'][0][2]);
-          console.log(kidsAmount)
-          const newAmount = parseInt(amount) + kidsAmount;
-          this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
-            this._snackBar.open('Paid Succesfully')
-          })
+          if (parseInt(amount) < 0 || parseInt(amount) < 500) {
+            this._snackBar.open('Allowance limitation is 0 to 500')
+          } else {
+            const kidsAmount = parseInt(data['message'][0][2]);
+            const newAmount = parseInt(amount) + kidsAmount;
+            this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
+              this._snackBar.open('Paid Succesfully')
+            })
+          }
         })
       }
     });
