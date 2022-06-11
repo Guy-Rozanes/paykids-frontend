@@ -2,9 +2,10 @@
 <div style="display:flex; color: white;">
   <div style="background-color:#2B303A ;">
     <h3>New Features:</h3>
-    <mat-list-option *ngFor="let link of links;index as i" (selectionChange)="selectionChanged(i)" [class.active]="selectedItem === i">
-      <a mat-list-item> <span class="contact-names">{{ link }}</span> </a>
-    </mat-list-option>
+    <mat-list-item *ngFor="let feature of features">
+      <mat-icon>star</mat-icon>
+      {{feature}}
+    </mat-list-item>
   </div>
   <div>
     <img src="../../assets/Capture.PNG" style="width: 214px;height: 236px;" />

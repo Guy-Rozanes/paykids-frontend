@@ -53,6 +53,11 @@ export class MyFamilyComponent implements OnInit {
   getFamily() {
     this.loginService.getAllFamily(this.user[1]).subscribe(data => {
       this.family = data['message'];
+      this.family = this.family.filter(member => {
+        if (member[0] != this.user[0]) {
+          return member;
+        }
+      })
     });
   }
 
@@ -76,6 +81,7 @@ export class MyFamilyComponent implements OnInit {
 
   addFamilyMember(email, password, firstName, lastName, paybox_id) {
     let response = '';
+    console.log(this.selectedRole)
     this.showSpinner = true;
     setTimeout(() => {
       const dialogRef = this.dialog.open(BankLoadingComponent)

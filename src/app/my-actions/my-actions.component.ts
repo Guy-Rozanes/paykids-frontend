@@ -25,7 +25,7 @@ export class MyActionsComponent implements OnInit {
     { 'product_name': 'Candy', 'product_price': 5 },
     { 'product_name': 'Supergoal', 'product_price': 15 },
     {},
-    { 'product_name': 'Fake Gun', 'product_price': 50 },
+    { 'product_name': 'T-Shirt', 'product_price': 30 },
     {},
     { 'product_name': 'Shoes', 'product_price': 200 },
     {},
