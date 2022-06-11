@@ -78,28 +78,29 @@ export class AssignSavingComponent implements OnInit {
     });
   }
   initializePaymentAllownce(kid, amount) {
-    const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
-      locale: 'auto',
-      token: (stripeToken: any) => {
-        this.service.getUserAmount(kid[0]).subscribe(data => {
-          if (parseInt(amount) < 0 || parseInt(amount) < 500) {
-            this._snackBar.open('Allowance limitation is 0 to 500')
-          } else {
+    if (parseInt(amount) < 0 || parseInt(amount) < 500) {
+      this._snackBar.open('Allowance limitation is 0 to 500')
+    }
+    else{
+      const paymentHandler = (<any>window).StripeCheckout.configure({
+        key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
+        locale: 'auto',
+        token: (stripeToken: any) => {
+          this.service.getUserAmount(kid[0]).subscribe(data => {
             const kidsAmount = parseInt(data['message'][0][2]);
             const newAmount = parseInt(amount) + kidsAmount;
             this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
               this._snackBar.open('Paid Succesfully')
             })
-          }
-        })
-      }
-    });
-    paymentHandler.open({
-      name: 'Pay to your kid',
-      description: '',
-      amount: '',
-    });
+          })
+        }
+      });
+      paymentHandler.open({
+        name: 'Pay to your kid',
+        description: '',
+        amount: '',
+      });
+    }
   }
   invokeStripe() {
     if (!window.document.getElementById('stripe-script')) {
