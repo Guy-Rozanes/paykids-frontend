@@ -48,12 +48,13 @@ export class MyActionsComponent implements OnInit {
           this.dataService.changeLoggedInStatus(true)
           this.getAllFamilyActions()
           this.getFamily();
+          this.getMyLastActions();
         })
       } else {
         this.getAllFamilyActions()
         this.getFamily();
+        this.getMyLastActions();
       }
-
     })
   }
 
@@ -108,6 +109,16 @@ export class MyActionsComponent implements OnInit {
       }
       this.selectedIndexNumber = this.selectedIndex();
     });
+  }
+
+  getMyLastActions() {
+    this.service.getAllUserActions(this.user[0]).subscribe(
+      data => {
+        if (data['message'] != 'User doesnt have actions'){
+          this.actions = data['message']
+        }
+      }
+    )
   }
 
   selectedIndex() {
