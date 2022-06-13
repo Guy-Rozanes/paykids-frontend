@@ -141,7 +141,7 @@ export class MyActionsComponent implements OnInit {
       syncDialog.close();
       this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe((data:any) => {
         const item:any = data['message']
-        if (item.product_name) {
+        if (item.product_name || item) {
           this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
             this.userCurrentAmount = response['message'][0][2];
             if (this.userCurrentAmount < item.product_price) {

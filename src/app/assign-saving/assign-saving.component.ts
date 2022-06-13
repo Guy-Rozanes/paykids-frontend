@@ -87,7 +87,7 @@ export class AssignSavingComponent implements OnInit {
     });
   }
   initializePaymentAllownce(kid, amount) {
-    if (parseInt(amount) < 0 || parseInt(amount) < 1000) {
+    if (parseInt(amount) < 0 || parseInt(amount) > 1000) {
       this._snackBar.open('Allowance limitation is 0 to 1000')
     }
     else {
