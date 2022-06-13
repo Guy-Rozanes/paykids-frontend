@@ -53,7 +53,8 @@ export class AddUserComponent implements OnInit {
         }, 10000)
       }
       else {
-
+        this.dialogRef.close();
+        this._matSnackBar.open(data['message'])
       }
     })
   }
