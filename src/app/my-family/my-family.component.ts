@@ -81,7 +81,6 @@ export class MyFamilyComponent implements OnInit {
 
   addFamilyMember(email, password, firstName, lastName, paybox_id) {
     let response = '';
-    console.log(this.selectedRole)
     this.showSpinner = true;
     setTimeout(() => {
       const dialogRef = this.dialog.open(BankLoadingComponent)
@@ -157,7 +156,6 @@ export class MyFamilyComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((data: any) => {
       const user = data.user
-      console.log(user)
       this.family.push(
         user
       )

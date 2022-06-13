@@ -139,25 +139,25 @@ export class MyActionsComponent implements OnInit {
     const syncDialog = this.dialog.open(PayboxSyncComponent)
     setTimeout(() => {
       syncDialog.close();
-      const index = Math.floor(Math.random() * 12) + 1
-      const item = this.randomProducts[index]
-      if (item != {}) {
-        this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
-          this.userCurrentAmount = response['message'][0][2];
-          if (this.userCurrentAmount < item.product_price) {
-            this._snackBar.open('User is synchornized');
-          }
-          else {
-            this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe(data => { })
-            const newAmount = this.userCurrentAmount - item.product_price;
-            this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
-            this.addAction(item.product_name, item.product_price.toLocaleString());
-          }
-        })
-      }
-      else {
-        this._snackBar.open('User is synchornized')
-      }
+      this.service.syncWithPaybox(this.user[0], this.user[6], this.user[8]).subscribe((data:any) => {
+        const item:any = data['message']
+        if (item.product_name) {
+          this.service.getUserAmount(this.user[0]).subscribe((response: any) => {
+            this.userCurrentAmount = response['message'][0][2];
+            if (this.userCurrentAmount < item.product_price) {
+              this._snackBar.open('User is synchornized');
+            }
+            else {
+              const newAmount = this.userCurrentAmount - item.product_price;
+              this.service.updateUserAmount(this.user[0], newAmount).subscribe(data => { });
+              this.addAction(item.product_name, item.product_price.toLocaleString());
+            }
+          })
+        }
+        else {
+          this._snackBar.open('User is synchornized')
+        }
+      })
     }, 5000)
   }
 }
