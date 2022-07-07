@@ -34,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PremiumWelcomeComponent } from './premium-welcome/premium-welcome.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { PayboxSyncComponent } from './paybox-sync/paybox-sync.component';
+import { ChooseCardComponent } from './choose-card/choose-card.component';
 
 
 
@@ -56,8 +57,19 @@ import { PayboxSyncComponent } from './paybox-sync/paybox-sync.component';
     PremiumWelcomeComponent,
     AddUserComponent,
     PayboxSyncComponent,
+    ChooseCardComponent,
   ],
-  entryComponents: [NfcComponent, CampaignScreenComponent, NotifcationComponent, BankLoadingComponent, ModifyUserComponent, PremiumWelcomeComponent, AddUserComponent,PayboxSyncComponent],
+  entryComponents: [
+    NfcComponent,
+    CampaignScreenComponent,
+    NotifcationComponent,
+    BankLoadingComponent,
+    ModifyUserComponent,
+    PremiumWelcomeComponent,
+    AddUserComponent,
+    PayboxSyncComponent,
+    ChooseCardComponent,
+  ],
   imports: [
     MatListModule,
     HttpClientModule,

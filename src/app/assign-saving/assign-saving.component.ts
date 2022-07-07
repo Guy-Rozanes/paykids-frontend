@@ -1,7 +1,8 @@
 declare var require: any;
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { first } from 'rxjs/operators';
+import { ChooseCardComponent } from '../choose-card/choose-card.component';
 import { DataServiceService } from '../data-service.service';
 import { LoginService } from '../login.service';
 interface Video {
@@ -16,7 +17,7 @@ interface Video {
   styleUrls: ['./assign-saving.component.css']
 })
 export class AssignSavingComponent implements OnInit {
-  constructor(private service: LoginService, private data: DataServiceService, private _snackBar: MatSnackBar) { }
+  constructor(private service: LoginService, private data: DataServiceService, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
   private user: any = this.data.currentUser.subscribe(user => this.user = user);
   private myKids: any = {};
   videos: Video[] = [
@@ -129,5 +130,23 @@ export class AssignSavingComponent implements OnInit {
       }
       window.document.body.appendChild(script);
     }
+  }
+
+  startPay(kid, amount: number) {
+    const dialogRef = this.dialog.open(ChooseCardComponent)
+    dialogRef.afterClosed().subscribe(data => {
+      if (data.choose) {
+        this.service.getUserAmount(kid[0]).subscribe(data => {
+          const kidsAmount = parseInt(data['message'][0][2]);
+          const newAmount = amount + kidsAmount;
+          this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
+            this._snackBar.open('Paid Succesfully')
+          })
+        })
+        this._snackBar.open('Paid Succesfully')
+      } else {
+        this.initializePayment(amount);
+      }
+    })
   }
 }

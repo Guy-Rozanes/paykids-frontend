@@ -62,12 +62,16 @@ export class LoginService {
     return this.http.get(this.root + `actions/family/${familyId}`);
   }
 
-  saveCreditCard(last4: string, exp: string) {
+  saveCreditCard(userId:string,last4: string, exp: string) {
     let body = {
+      userId,
       last4,
       exp,
     }
-    return this.http.post(this.root + `payment/premium`, JSON.stringify(body), { headers: this.headers })
+    return this.http.post(this.root + `user/card/`, JSON.stringify(body), { headers: this.headers })
+  }
+  getCreditCard(userId:string) {
+    return this.http.get(this.root + `user/card/${userId}`, { headers: this.headers })
   }
 
   addFamilyAccountType(familyId: string, accountType: string) {

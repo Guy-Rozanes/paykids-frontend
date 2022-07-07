@@ -45,5 +45,5 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button *ngIf="selectedKidAllowance" class="primary-button" mat-raised-button (click)="initializePaymentAllownce(selectedKidAllowance,payment.value)">Send Money to {{selectedKidAllowance[0]}}</button>
+    <button *ngIf="selectedKidAllowance" class="primary-button" mat-raised-button (click)="startPay(selectedKidAllowance,payment.value)">Send Money to {{selectedKidAllowance[0]}}</button>
 </div>

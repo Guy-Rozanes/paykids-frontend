@@ -42,7 +42,7 @@ export class MyFamilyComponent implements OnInit {
           this.getFamily();
           this.accountType = this.user[7] == 'PREMIUM'
         })
-      }else{
+      } else {
         this.getFamily();
         this.accountType = this.user[7] == 'PREMIUM'
       }
@@ -114,6 +114,13 @@ export class MyFamilyComponent implements OnInit {
           this.accountType = true;
           this.user[7] = 'PREMIUM';
           this.data.initUser(this.user);
+          this.loginService.saveCreditCard(
+            this.user[0],
+            stripeToken.card.last4,
+            `${stripeToken.card.exp_month}/${stripeToken.card.exp_year}`
+          ).subscribe(data=>{
+            console.log(data)
+          })
         })
         this.dialog.open(PremiumWelcomeComponent)
       }
