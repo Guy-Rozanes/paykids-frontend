@@ -27,7 +27,7 @@
     </span>
 </div>
 <div *ngIf="selectedKid && selectedVideo">
-    <button class="primary-button" mat-raised-button (click)="initializePayment()">Payment of {{selectedVideo.price}}
+    <button class="primary-button" mat-raised-button (click)="startPay(selectedKid,payment.value,'Campaigns')">Payment of {{selectedVideo.price}}
         ₪</button>
 </div>
 <div>
@@ -45,5 +45,5 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button *ngIf="selectedKidAllowance" class="primary-button" mat-raised-button (click)="startPay(selectedKidAllowance,payment.value)">Send Money to {{selectedKidAllowance[0]}}</button>
+    <button *ngIf="selectedKidAllowance" class="primary-button" mat-raised-button (click)="startPay(selectedKidAllowance,payment.value,'Allowance')">Send Money to {{selectedKidAllowance[0]}}</button>
 </div>

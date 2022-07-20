@@ -47,4 +47,16 @@ export class ChooseCardComponent implements OnInit {
       )
     }
   }
+
+  deleteCard(creditCard) {
+    this.loginService.deleteCreditCard(creditCard[1], creditCard[2]).subscribe(data => {
+      if (data['message'] == 'Card Deleted') {
+        this.cards = this.cards.filter(item => {
+          if (item[1] != creditCard[1] && item[2] != creditCard[2]) {
+            return item
+          }
+        })
+      }
+    })
+  }
 }

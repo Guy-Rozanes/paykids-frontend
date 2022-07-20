@@ -1,12 +1,21 @@
 <div *ngIf="!payment">
-  <mat-card (click)="choose(creditCard)" *ngFor="let creditCard of cards">
-    <mat-card-title>**** **** **** {{creditCard[1]}}</mat-card-title>
+  <mat-card *ngFor="let creditCard of cards">
+    <mat-card-title style="cursor:pointer" >**** **** **** **** {{creditCard[1]}}</mat-card-title>
     <mat-card-subtitle>{{creditCard[2]}}</mat-card-subtitle>
+    <mat-card-actions>
+      <button (click)="deleteCard(creditCard)" mat-raised-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button (click)="choose(creditCard)" mat-raised-button>
+        <mat-icon>credit_card</mat-icon>
+      </button>
+    </mat-card-actions>
   </mat-card>
   <br />
   <br />
 </div>
-<button (click)="choose()" class="primary-button" mat-raised-button>Add Card</button>
+<button *ngIf="!payment" (click)="choose()" class="primary-button" mat-raised-button>Add Card</button>
 <div>
   <mat-spinner *ngIf="payment"></mat-spinner>
 </div>
+

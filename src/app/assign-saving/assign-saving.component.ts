@@ -78,7 +78,13 @@ export class AssignSavingComponent implements OnInit {
       key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
       locale: 'auto',
       token: (stripeToken: any) => {
+        console.log('a')
         this.addSavingExc();
+        this.service.saveCreditCard(
+          this.user[0],
+          stripeToken.card.last4,
+          `${stripeToken.card.exp_month}/${stripeToken.card.exp_year}`
+        ).subscribe(data => { })
       }
     });
     paymentHandler.open({
@@ -96,6 +102,11 @@ export class AssignSavingComponent implements OnInit {
         key: 'pk_test_sLUqHXtqXOkwSdPosC8ZikQ800snMatYMb',
         locale: 'auto',
         token: (stripeToken: any) => {
+          this.service.saveCreditCard(
+            this.user[0],
+            stripeToken.card.last4,
+            `${stripeToken.card.exp_month}/${stripeToken.card.exp_year}`
+          ).subscribe(data => { })
           this.service.getUserAmount(kid[0]).subscribe(data => {
             const kidsAmount = parseInt(data['message'][0][2]);
             const newAmount = parseInt(amount) + kidsAmount;
@@ -132,20 +143,28 @@ export class AssignSavingComponent implements OnInit {
     }
   }
 
-  startPay(kid, amount: number) {
+  startPay(kid, amount, type) {
     const dialogRef = this.dialog.open(ChooseCardComponent)
     dialogRef.afterClosed().subscribe(data => {
       if (data.choose) {
         this.service.getUserAmount(kid[0]).subscribe(data => {
           const kidsAmount = parseInt(data['message'][0][2]);
-          const newAmount = amount + kidsAmount;
+          const newAmount = parseInt(amount) + kidsAmount;
           this.service.updateUserAmount(kid[0], newAmount).subscribe(data => {
+            if (type == 'Campaigns') {
+              this.addSavingExc();
+            }
             this._snackBar.open('Paid Succesfully')
           })
         })
         this._snackBar.open('Paid Succesfully')
       } else {
-        this.initializePayment(amount);
+        if (type == 'Allowance') {
+          this.initializePaymentAllownce(kid, amount);
+        }
+        else {
+          this.initializePayment(parseInt(amount))
+        }
       }
     })
   }

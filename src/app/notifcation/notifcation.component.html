@@ -1,5 +1,10 @@
-<ul class="example-list">
-  <li *ngFor="let action of data.unseen_actions">
-    {{action.user_id}} purchased {{action.action_name}} for {{action.action_price}} ₪
-  </li>
-</ul>
+<div *ngIf="data.unseen_actions.length!=0">
+  <ul class="example-list">
+    <li *ngFor="let action of data.unseen_actions">
+      {{action.user_id}} purchased {{action.action_name}} for {{action.action_price}} ₪
+    </li>
+  </ul>
+</div>
+<div *ngIf="data.unseen_actions.length==0">
+  <b>No Notification</b>
+</div>

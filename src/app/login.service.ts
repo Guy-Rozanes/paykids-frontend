@@ -62,7 +62,7 @@ export class LoginService {
     return this.http.get(this.root + `actions/family/${familyId}`);
   }
 
-  saveCreditCard(userId:string,last4: string, exp: string) {
+  saveCreditCard(userId: string, last4: string, exp: string) {
     let body = {
       userId,
       last4,
@@ -70,8 +70,20 @@ export class LoginService {
     }
     return this.http.post(this.root + `user/card/`, JSON.stringify(body), { headers: this.headers })
   }
-  getCreditCard(userId:string) {
+  getCreditCard(userId: string) {
     return this.http.get(this.root + `user/card/${userId}`, { headers: this.headers })
+  }
+
+  deleteCreditCard(last4: string, exp: string) {
+    const options = {
+      headers: this.headers,
+      body: {
+        last4,
+        exp,
+      }
+    }
+
+    return this.http.delete(this.root + `user/card/`, options)
   }
 
   addFamilyAccountType(familyId: string, accountType: string) {
